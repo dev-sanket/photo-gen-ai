@@ -1,3 +1,4 @@
+import baseConfig from "../../../eslint.config.mjs";
 import typescriptEslint from "@typescript-eslint/eslint-plugin";
 import tsParser from "@typescript-eslint/parser";
 import path from "node:path";
@@ -14,10 +15,7 @@ const compat = new FlatCompat({
 });
 
 export default [
-  ...compat.extends(
-    "../../.eslintrc.json",
-    "plugin:@typescript-eslint/recommended",
-  ),
+  ...compat.extends([...baseConfig, "plugin:@typescript-eslint/recommended"]),
   {
     plugins: {
       "@typescript-eslint": typescriptEslint,
@@ -26,6 +24,8 @@ export default [
     languageOptions: {
       parser: tsParser,
     },
+
+    ignores: ["node_modules/", "dist/"],
 
     rules: {
       "@typescript-eslint/no-explicit-any": "off",

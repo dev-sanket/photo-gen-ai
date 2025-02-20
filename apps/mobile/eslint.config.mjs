@@ -6,6 +6,7 @@ import { fileURLToPath } from "node:url";
 import js from "@eslint/js";
 import { FlatCompat } from "@eslint/eslintrc";
 import reactNative from "eslint-plugin-react-native"; // ✅ Import React Native Plugin
+import baseConfig from "../../eslint.config.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,9 +18,9 @@ const compat = new FlatCompat({
 
 export default [
   ...compat.extends(
-    "../../.eslintrc.json",
+    ...baseConfig, // ✅ Extend baseConfig
     "plugin:react/recommended",
-    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended"
   ),
   {
     plugins: {
