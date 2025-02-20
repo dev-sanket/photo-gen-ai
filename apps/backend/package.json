@@ -15,22 +15,25 @@
     "@types/express": "^5.0.0",
     "@types/node": "^22.13.4",
     "@types/pg": "^8.11.11",
+    "@typescript-eslint/eslint-plugin": "^8.24.1",
+    "@typescript-eslint/parser": "^8.24.1",
     "nodemon": "^3.1.9",
     "rimraf": "^6.0.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.7.3"
   },
   "dependencies": {
+    "common": "file:../../packages/common",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "pg": "^8.13.3",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20",
-    "winston": "^3.17.0",
-    "common": "file:../../packages/common"
+    "winston": "^3.17.0"
   },
   "workspaces": {
-    "packages": ["../packages/common"]
+    "packages": [
+      "../packages/common"
+    ]
   }
-
 }
