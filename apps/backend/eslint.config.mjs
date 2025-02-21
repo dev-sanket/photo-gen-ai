@@ -1,34 +1,29 @@
-import baseConfig from "../../../eslint.config.mjs";
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-import tsParser from "@typescript-eslint/parser";
-import path from "node:path";
-import { fileURLToPath } from "node:url";
-import js from "@eslint/js";
-import { FlatCompat } from "@eslint/eslintrc";
+import typescript from "@typescript-eslint/eslint-plugin";
+import prettier from "eslint-config-prettier";
+import typescriptParser from "@typescript-eslint/parser";
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-const compat = new FlatCompat({
-  baseDirectory: __dirname,
-  recommendedConfig: js.configs.recommended,
-  allConfig: js.configs.all,
-});
-
-export default [
-  ...compat.extends([...baseConfig, "plugin:@typescript-eslint/recommended"]),
-  {
-    plugins: {
-      "@typescript-eslint": typescriptEslint,
-    },
-
-    languageOptions: {
-      parser: tsParser,
-    },
-
-    ignores: ["node_modules/", "dist/"],
-
-    rules: {
-      "@typescript-eslint/no-explicit-any": "off",
-    },
+export default {
+  env: {
+    node: true,
+    es2021: true,
   },
-];
+  parser: typescriptParser,
+  parserOptions: {
+    ecmaVersion: 12,
+    sourceType: "module",
+    project: "./tsconfig.json",
+  },
+  plugins: ["@typescript-eslint", "import", "node"],
+  extends: [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:node/recommended",
+    "prettier",
+  ],
+  rules: {
+    "@typescript-eslint/no-explicit-any": "warn",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "node/no-missing-import": "error",
+    "import/no-unresolved": "error",
+  },
+};

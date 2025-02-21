@@ -1,11 +1,15 @@
+import react from "eslint-plugin-react";
+import reactNative from "eslint-plugin-react-native";
+
 export default [
   {
-    ignores: ["node_modules/", "dist/"],
+    ignores: ["node_modules/*", "dist/*"],
+    files: ["**/*.ts", "**/*.cts", "**.*.mts"],
   },
   {
     plugins: {
-      react: require("eslint-plugin-react"),
-      "react-native": require("eslint-plugin-react-native"),
+      react,
+      "react-native": reactNative,
     },
     languageOptions: {
       parserOptions: {

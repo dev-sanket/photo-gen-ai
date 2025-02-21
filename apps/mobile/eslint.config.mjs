@@ -37,6 +37,8 @@ export default [
       parser: tsParser,
     },
 
+    ignores: ["node_modules/*", "dist/*"],
+
     rules: {
       "react/jsx-uses-react": "error",
       "react/jsx-uses-vars": "error",
