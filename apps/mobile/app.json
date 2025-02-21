@@ -1,9 +1,10 @@
 {
   "expo": {
-    "name": "photo-app",
-    "slug": "photo-app",
+    "name": "mobile",
+    "slug": "mobile",
     "version": "1.0.0",
     "orientation": "portrait",
+    "entryPoint": "index.tsx",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
@@ -15,7 +16,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.devsanket.mobile"
     },
     "web": {
       "bundler": "metro",
@@ -36,15 +38,6 @@
     ],
     "experiments": {
       "typedRoutes": true
-    },
-    "extra": {
-      "router": {
-        "origin": false
-      },
-      "eas": {
-        "projectId": "ccd920cb-f2ac-49ed-8f7f-29d80c1b8848"
-      }
-    },
-    "owner": "dev-sanket"
+    }
   }
 }
