@@ -5,6 +5,8 @@ import * as SplashScreen from 'expo-splash-screen';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
 import 'react-native-reanimated';
+import {useAuth0, Auth0Provider} from 'react-native-auth0';
+
 
 import { useColorScheme } from '@/hooks/useColorScheme';
 
@@ -28,12 +30,15 @@ export default function RootLayout() {
   }
 
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="+not-found" />
-      </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
+    <Auth0Provider domain={"photoapp.au.auth0.com"} clientId={"0IrdxQSeIdA2PeG4XvURLV3zS9zBIxYp"}>
+      <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="+not-found" />
+          <Stack.Screen name="index" options={{headerShown: false}}/>
+        </Stack>
+        <StatusBar style="auto" />
+      </ThemeProvider>
+    </Auth0Provider>
   );
 }

@@ -9,15 +9,15 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
-    "ios": {
-      "supportsTablet": true
-    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.devsanket.mobile"
+      "package": "com.photoapp.mobile.android"
+    },
+    "ios": {
+      "bundleIdentifier": "com.photoapp.mobile.ios"
     },
     "web": {
       "bundler": "metro",
@@ -33,6 +33,12 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
+        }
+      ],
+      [
+        "react-native-auth0",
+        {
+          "domain": "photoapp.au.auth0.com"
         }
       ]
     ],
