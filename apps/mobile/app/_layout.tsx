@@ -32,7 +32,7 @@ export default function RootLayout() {
   return (
     <Auth0Provider domain={"photoapp.au.auth0.com"} clientId={"0IrdxQSeIdA2PeG4XvURLV3zS9zBIxYp"}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack>
+        <Stack initialRouteName='index'>
           <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
           <Stack.Screen name="+not-found" />
           <Stack.Screen name="index" options={{headerShown: false}}/>
