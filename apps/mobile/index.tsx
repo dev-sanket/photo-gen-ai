@@ -1,6 +1,6 @@
 import { registerRootComponent } from "expo";
 import { ExpoRoot } from "expo-router";
-import { View, Text } from "react-native";
+import { Text, View } from "react-native";
 
 
 export function App() {

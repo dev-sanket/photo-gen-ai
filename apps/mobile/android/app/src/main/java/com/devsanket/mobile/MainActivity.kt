@@ -1,4 +1,4 @@
-package com.photoapp.mobile.android
+package com.devsanket.mobile
 import expo.modules.splashscreen.SplashScreenManager
 
 import android.os.Build

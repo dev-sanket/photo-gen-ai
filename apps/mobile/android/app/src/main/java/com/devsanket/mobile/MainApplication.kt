@@ -1,4 +1,4 @@
-package com.photoapp.mobile.android
+package com.devsanket.mobile
 
 import android.app.Application
 import android.content.res.Configuration

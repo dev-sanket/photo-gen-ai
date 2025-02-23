@@ -3,21 +3,26 @@
     "name": "mobile",
     "slug": "mobile",
     "version": "1.0.0",
+    "sdkVersion": "52.0.0",
+    "platforms": [
+      "ios",
+      "android"
+    ],
     "orientation": "portrait",
-    "entryPoint": "index.tsx",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.devsanket.mobile"
+    },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.photoapp.mobile.android"
-    },
-    "ios": {
-      "bundleIdentifier": "com.photoapp.mobile.ios"
+      "package": "com.devsanket.mobile"
     },
     "web": {
       "bundler": "metro",
@@ -33,12 +38,6 @@
           "imageWidth": 200,
           "resizeMode": "contain",
           "backgroundColor": "#ffffff"
-        }
-      ],
-      [
-        "react-native-auth0",
-        {
-          "domain": "photoapp.au.auth0.com"
         }
       ]
     ],

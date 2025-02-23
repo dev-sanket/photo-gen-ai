@@ -28,15 +28,7 @@
         <key>CFBundleURLSchemes</key>
         <array>
           <string>myapp</string>
-          <string>com.photoapp.mobile.ios</string>
-        </array>
-      </dict>
-      <dict>
-        <key>CFBundleURLName</key>
-        <string>auth0</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-          <string>com.photoapp.mobile.ios.auth0</string>
+          <string>com.devsanket.mobile</string>
         </array>
       </dict>
     </array>

@@ -6,7 +6,8 @@
   "scripts": {
     "start": "npm run build && node build/index.js",
     "start:dev": "npx nodemon src/index.ts",
-    "build": "rimraf ./build && tsc"
+    "build": "rimraf ./build && tsc",
+    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "keywords": [],
   "author": "",
@@ -33,7 +34,8 @@
     "pg": "^8.13.3",
     "reflect-metadata": "^0.2.2",
     "typeorm": "^0.3.20",
-    "winston": "^3.17.0"
+    "winston": "^3.17.0",
+    "@repo/eslint-config": "*"
   },
   "workspaces": {
     "packages": [
