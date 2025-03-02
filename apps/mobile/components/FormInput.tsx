@@ -1,16 +1,28 @@
-import React from "react";
-import { TextInput, View, Text, StyleSheet } from "react-native";
+import { AppTheme, useAppTheme } from '@/theme/theme'
+import React from 'react'
+import { TextInput, View, Text, StyleSheet } from 'react-native'
 
 interface FromInputProps {
-    label: string,
-    value: string,
-    onChangeText: (text: string) => void,
-    onBlur: (e: any) => void,
-    placeholder: string,
-    secureTextEntry?: boolean,
-    error?: string
+  label: string
+  value: string
+  onChangeText: (text: string) => void
+  onBlur: (e: any) => void
+  placeholder: string
+  secureTextEntry?: boolean
+  error?: string
 }
-const FormInput: React.FC<FromInputProps> = ({ label, value, onChangeText, onBlur, placeholder, secureTextEntry, error }) => {
+const FormInput: React.FC<FromInputProps> = ({
+  label,
+  value,
+  onChangeText,
+  onBlur,
+  placeholder,
+  secureTextEntry,
+  error
+}) => {
+  const theme: AppTheme = useAppTheme()
+  const styles = getStyles(theme)
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>{label}</Text>
@@ -24,16 +36,31 @@ const FormInput: React.FC<FromInputProps> = ({ label, value, onChangeText, onBlu
       />
       {error && <Text style={styles.errorText}>{error}</Text>}
     </View>
-  );
-};
+  )
+}
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
+    container: { marginBottom: theme.spacing.md },
+    label: {
+      fontSize: theme.fonts.labelLarge.fontSize,
+      fontWeight: theme.fonts.labelLarge.fontWeight,
+      marginBottom: theme.spacing.xs,
+      color: theme.colors.text
+    },
+    input: {
+      borderWidth: 1,
+      padding: 10,
+      borderRadius: 5,
+      borderColor: '#ccc',
+      fontSize: 16
+    },
+    errorInput: { borderColor: theme.colors.error },
+    errorText: {
+      color: theme.colors.error,
+      fontSize: theme.fonts.labelSmall.fontSize,
+      marginTop: theme.spacing.xs,
+      marginLeft: theme.spacing.xs
+    }
+  })
 
-const styles = StyleSheet.create({
-  container: { marginBottom: 20 },
-  label: { fontSize: 14, fontWeight: "600", marginBottom: 5, color: "#374151" },
-  input: {
-    borderWidth: 1, padding: 10, borderRadius: 5, borderColor: "#ccc", fontSize: 16,},
-  errorInput: { borderColor: "red" },
-  errorText: { color: "red", fontSize: 12, marginTop: 3 },
-});
-
-export default FormInput;
+export default FormInput

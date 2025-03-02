@@ -1,5 +1,5 @@
 import React, { useCallback } from 'react'
-import { useSignIn } from '@clerk/clerk-expo'
+import { useSignIn, useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
 import { ThemedText } from '@/components/ThemedText'
@@ -10,51 +10,51 @@ import SocialLoginButton from '@/components/SocialLoginButton'
 import { AppTheme, useAppTheme } from '@/theme/theme'
 
 export default function Page() {
-  const { signIn, setActive, isLoaded } = useSignIn()
+  const { signUp, setActive, isLoaded } = useSignUp()
   const router = useRouter()
   const theme = useAppTheme()
 
   const styles = getStyles(theme)
 
   const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Too short!').required('Required')
+    name: Yup.string().min(2, 'Too short name').required('Name is required'),
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string()
+      .min(6, 'Too short password!')
+      .required('Password is required')
   })
 
   // Handle the submission of the sign-in form
-  const onSignInPress = useCallback(
-    async (values: { email: string; password: string }) => {
+  const onSignUpPress = useCallback(
+    async (values: { email: string; password: string; name: string }) => {
       if (!isLoaded) return
 
       // Start the sign-in process using the email and password provided
       try {
-        const signInAttempt = await signIn.create({
-          identifier: values.email,
+        console.log('fnme--->', values.name.split(' ')[0])
+        console.log('lnme--->', values.name.split(' ')[1])
+        const signupResponse = await signUp.create({
+          emailAddress: values.email,
           password: values.password
         })
 
-        // If sign-in process is complete, set the created session as active
-        // and redirect the user
-        if (signInAttempt.status === 'complete') {
-          await setActive({ session: signInAttempt.createdSessionId })
-          router.replace('/')
-        } else {
-          // If the status isn't complete, check why. User might need to
-          // complete further steps.
-          console.error(JSON.stringify(signInAttempt, null, 2))
-        }
+        const signupCode = await signUp.prepareEmailAddressVerification({
+          strategy: 'email_code'
+        })
+        console.log('signupCode ---> ', signupCode)
+        router.push('/verify-email', {})
       } catch (err) {
         // See https://clerk.com/docs/custom-flows/error-handling
         // for more info on error handling
         console.error(JSON.stringify(err, null, 2))
       }
     },
-    [isLoaded, signIn, setActive, router]
+    [isLoaded, signUp, setActive, router]
   )
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginTop: theme.spacing.xxxl, alignItems: 'center' }}>
+      <View style={{ marginTop: theme.spacing.xxxl * 2, alignItems: 'center' }}>
         <Image
           source={require('../../assets/images/icon.png')} // Change to your logo path
           style={{ width: 100, height: 100, resizeMode: 'contain' }}
@@ -85,37 +85,11 @@ export default function Page() {
         </ThemedText>
       </View>
 
-      <View style={styles.socialButtonsContainer}>
-        <SocialLoginButton strategy="facebook" />
-        <SocialLoginButton strategy="google" />
-        <SocialLoginButton strategy="apple" />
-      </View>
-
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: theme.spacing.md,
-          padding: theme.spacing.md,
-          alignSelf: 'center'
-        }}
-      >
-        <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
-        <View>
-          <Text
-            style={{ textAlign: 'center', color: theme.colors.text, margin: 5 }}
-          >
-            Or continue with
-          </Text>
-        </View>
-        <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
-      </View>
-
       <View style={{ marginTop: theme.spacing.md }}>
         <Formik
-          initialValues={{ email: '', password: '' }}
+          initialValues={{ email: '', password: '', name: '' }}
           validationSchema={validationSchema}
-          onSubmit={async (values) => await onSignInPress(values)}
+          onSubmit={async (values) => await onSignUpPress(values)}
         >
           {({
             handleChange,
@@ -126,6 +100,14 @@ export default function Page() {
             touched
           }) => (
             <View style={styles.formContainer}>
+              <FormInput
+                label="Full Name"
+                value={values.name}
+                onChangeText={handleChange('name')}
+                onBlur={handleBlur('name')}
+                placeholder="Enter your full Name"
+                error={touched.name ? errors.name : undefined}
+              />
               <FormInput
                 label="Email Address"
                 value={values.email}
@@ -155,7 +137,7 @@ export default function Page() {
                 ]}
                 onPress={() => handleSubmit()}
               >
-                <Text style={styles.buttonText}>Signin</Text>
+                <Text style={styles.buttonText}>Signup</Text>
               </TouchableOpacity>
             </View>
           )}
@@ -170,9 +152,9 @@ export default function Page() {
           justifyContent: 'center'
         }}
       >
-        <Text>Don't have an account?</Text>
-        <Link href="../sign-up" style={{ marginLeft: 5, color: '#6366f1' }}>
-          <Text>Sign up</Text>
+        <Text>Already have an account?</Text>
+        <Link href="../sign-in" style={{ marginLeft: 5, color: '#6366f1' }}>
+          <Text>Sign in</Text>
         </Link>
       </View>
     </View>

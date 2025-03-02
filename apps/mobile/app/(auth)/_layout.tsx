@@ -6,8 +6,21 @@ export default function AuthRoutesLayout() {
   const { isSignedIn } = useAuth()
 
   if (isSignedIn) {
-    return <Redirect href={'/'} />
+    return <Redirect href="/(tabs)/(dashboard)/" />
   }
 
-  return <Stack />
+  return (
+    <Stack initialRouteName="index">
+      <Stack.Screen name="index" options={{ headerShown: false }} />
+      <Stack.Screen name="sign-in" options={{ headerShown: false }} />
+      <Stack.Screen
+        name="sign-up"
+        options={{ headerShown: false, title: 'Sign Up' }}
+      />
+      <Stack.Screen
+        name="verify-email"
+        options={{ headerShown: true, title: 'Verify Email' }}
+      />
+    </Stack>
+  )
 }

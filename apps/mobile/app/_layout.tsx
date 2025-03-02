@@ -1,40 +1,42 @@
-import React from 'react';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Slot, Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
-import { StatusBar } from 'expo-status-bar';
-import { useEffect } from 'react';
-import 'react-native-reanimated';
+import React, { useEffect } from 'react'
+import { useFonts } from 'expo-font'
+import { Redirect, Slot, Stack } from 'expo-router'
+import * as SplashScreen from 'expo-splash-screen'
+import { StatusBar } from 'expo-status-bar'
+import 'react-native-reanimated'
 
-import { useColorScheme } from '@/hooks/useColorScheme';
-import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo';
-import { tokenCache } from '@/cache';
+import { useColorScheme } from '@/hooks/useColorScheme'
+import { ClerkLoaded, ClerkProvider } from '@clerk/clerk-expo'
+import { tokenCache } from '@/cache'
+import { PaperProvider } from 'react-native-paper'
+import { darkTheme, lightTheme } from '@/theme/theme'
+import { Appearance } from 'react-native'
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  const colorScheme = useColorScheme()
   const [loaded] = useFonts({
-    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
-  });
+    SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf')
+  })
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      SplashScreen.hideAsync()
+      Appearance.setColorScheme('light') // Force light mode
     }
-  }, [loaded]);
+  }, [loaded])
 
   if (!loaded) {
-    return null;
+    return null
   }
 
   const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY!
-
+  console.log('colorScheme ---->', colorScheme)
   if (!publishableKey) {
     throw new Error(
-      'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env',
+      'Missing Publishable Key. Please set EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY in your .env'
     )
   }
   return (
@@ -46,10 +48,13 @@ export default function RootLayout() {
     //   </Stack>
     //   <StatusBar style="auto" />
     // </ThemeProvider>
-    <ClerkProvider tokenCache={tokenCache}  publishableKey={publishableKey}>
-      <ClerkLoaded>
-        <Slot />
-      </ClerkLoaded>
+    <ClerkProvider tokenCache={tokenCache} publishableKey={publishableKey}>
+      <PaperProvider theme={colorScheme === 'dark' ? darkTheme : lightTheme}>
+        <StatusBar style="auto" />
+        <ClerkLoaded>
+          <Slot />
+        </ClerkLoaded>
+      </PaperProvider>
     </ClerkProvider>
   )
 }

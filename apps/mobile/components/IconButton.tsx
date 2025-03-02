@@ -1,16 +1,21 @@
-import { View, Text, TouchableOpacity } from 'react-native'
+import {
+  TouchableOpacity,
+  StyleProp,
+  ViewStyle,
+  StyleSheet
+} from 'react-native'
 import React from 'react'
 import { IconSymbol, IconSymbolName } from './ui/IconSymbol'
 
 interface IconButtonProps {
-  icon: IconSymbolName;
-  size?: number;
-  color?: string;
-  text?: string;
-  style?: object;
-  iconPosition?: "left" | "right";
-  onPress: () => void;
-  children?: React.ReactNode;
+  icon: IconSymbolName
+  size?: number
+  color?: string
+  text?: string
+  style?: StyleProp<ViewStyle>
+  iconPosition?: 'left' | 'right'
+  onPress: () => void
+  children?: React.ReactNode
 }
 
 const IconButton: React.FC<IconButtonProps> = ({
@@ -18,28 +23,31 @@ const IconButton: React.FC<IconButtonProps> = ({
   size = 24,
   color = '#fff',
   style = {},
-  iconPosition = "left",
+  iconPosition = 'left',
   onPress,
   children = null
 }) => {
   return (
-    <TouchableOpacity 
-          style={{
-            borderWidth: 1,
-            borderColor:'rgba(42, 42, 42, 0.2)',
-            alignItems:'center',
-            justifyContent:'center',
-            width:100,
-            height:100,
-            backgroundColor:'#fff',
-            borderRadius:50,
-            ...style,
+    <TouchableOpacity
+      style={{
+        borderWidth: 1,
+        borderColor: 'rgba(42, 42, 42, 0.2)',
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 100,
+        height: 100,
+        backgroundColor: '#fff',
+        ...StyleSheet.flatten(style)
       }}
       onPress={onPress}
     >
-      {iconPosition === "left" && <IconSymbol name={icon} size={size} color={color} />}
-      { children }
-      {iconPosition === "right" && <IconSymbol name={icon} size={size} color={color} />}
+      {iconPosition === 'left' && (
+        <IconSymbol name={icon} size={size} color={color} />
+      )}
+      {children}
+      {iconPosition === 'right' && (
+        <IconSymbol name={icon} size={size} color={color} />
+      )}
     </TouchableOpacity>
   )
 }
