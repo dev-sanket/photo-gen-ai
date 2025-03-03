@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useState } from 'react'
 import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
 import {
@@ -15,9 +15,11 @@ import { Formik } from 'formik'
 import FormInput from '@/components/FormInput'
 import SocialLoginButton from '@/components/SocialLoginButton'
 import { AppTheme, useAppTheme } from '@/theme/theme'
+import CustomButton from '@/components/ui/Button'
 
 export default function Page() {
   const { signIn, setActive, isLoaded } = useSignIn()
+  const [loading, setLoading] = useState(false)
   const router = useRouter()
   const theme = useAppTheme()
 
@@ -32,14 +34,13 @@ export default function Page() {
   const onSignInPress = useCallback(
     async (values: { email: string; password: string }) => {
       if (!isLoaded) return
-
+      setLoading(true)
       // Start the sign-in process using the email and password provided
       try {
         const signInAttempt = await signIn.create({
           identifier: values.email,
           password: values.password
         })
-
         // If sign-in process is complete, set the created session as active
         // and redirect the user
         if (signInAttempt.status === 'complete') {
@@ -55,6 +56,7 @@ export default function Page() {
         // for more info on error handling
         // console.error(JSON.stringify(err, null, 2))
         const error = err as any
+        setLoading(false)
         Alert.alert('Error in Signin', error.errors[0].longMessage, [
           { text: 'OK', onPress: () => console.log('OK Pressed') }
         ])
@@ -122,7 +124,15 @@ export default function Page() {
         <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
       </View>
 
-      <View style={{ marginTop: theme.spacing.md }}>
+      <View
+        style={
+          {
+            // marginTop: theme.spacing.md,
+            // borderColor: 'red',
+            // borderWidth: 1
+          }
+        }
+      >
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
@@ -154,7 +164,7 @@ export default function Page() {
                 secureTextEntry
                 error={touched.password ? errors.password : undefined}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[
                   styles.button,
                   !values.email ||
@@ -167,7 +177,30 @@ export default function Page() {
                 onPress={() => handleSubmit()}
               >
                 <Text style={styles.buttonText}>Signin</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
+              <CustomButton
+                text="Signin"
+                loading={loading}
+                disable={
+                  loading ||
+                  !values.email ||
+                  !values.password ||
+                  (errors.email?.length ?? 0) > 0 ||
+                  (errors.password?.length ?? 0) > 0
+                }
+                onPress={handleSubmit}
+                style={[
+                  { marginTop: theme.spacing.md },
+                  loading ||
+                  !values.email ||
+                  !values.password ||
+                  errors.email?.length ||
+                  errors.password?.length
+                    ? styles.disabled
+                    : {}
+                ]}
+              />
             </View>
           )}
         </Formik>
@@ -191,7 +224,9 @@ export default function Page() {
 }
 const getStyles = (theme: AppTheme) =>
   StyleSheet.create({
-    formContainer: { padding: theme.spacing.md },
+    formContainer: {
+      padding: theme.spacing.md
+    },
     button: {
       backgroundColor: '#007BFF',
       padding: 12,

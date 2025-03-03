@@ -44,7 +44,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </ThemedText>
         </View>
         <TouchableOpacity
-          onPress={() => router.push(`/(tabs)/(dashboard)/${user.id}`)}
+          onPress={() => router.push(`/(tabs)/(profile)/${user.id}`)}
         >
           <Image
             source={{ uri: user.imageUrl }}

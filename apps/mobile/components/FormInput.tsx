@@ -50,7 +50,7 @@ const getStyles = (theme: AppTheme) =>
     input: {
       borderWidth: 1,
       padding: 10,
-      borderRadius: 5,
+      borderRadius: theme.roundness,
       borderColor: '#ccc',
       fontSize: 16
     },

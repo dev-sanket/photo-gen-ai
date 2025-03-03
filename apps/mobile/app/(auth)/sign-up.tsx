@@ -1,20 +1,13 @@
-import React, { useCallback } from 'react'
-import { useSignIn, useSignUp } from '@clerk/clerk-expo'
+import React, { useCallback, useState } from 'react'
+import { useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import {
-  Text,
-  View,
-  Image,
-  TouchableOpacity,
-  StyleSheet,
-  Alert
-} from 'react-native'
+import { Text, View, Image, StyleSheet, Alert } from 'react-native'
 import { ThemedText } from '@/components/ThemedText'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
 import FormInput from '@/components/FormInput'
-import SocialLoginButton from '@/components/SocialLoginButton'
 import { AppTheme, useAppTheme } from '@/theme/theme'
+import CustomButton from '@/components/ui/Button'
 
 export default function Page() {
   const { signUp, setActive, isLoaded } = useSignUp()
@@ -22,6 +15,7 @@ export default function Page() {
   const theme = useAppTheme()
 
   const styles = getStyles(theme)
+  const [loading, setLoading] = useState(false)
 
   const validationSchema = Yup.object({
     name: Yup.string().min(2, 'Too short name').required('Name is required'),
@@ -35,7 +29,7 @@ export default function Page() {
   const onSignUpPress = useCallback(
     async (values: { email: string; password: string; name: string }) => {
       if (!isLoaded) return
-
+      setLoading(true)
       // Start the sign-in process using the email and password provided
       try {
         // console.log('fnme--->', values.name.split(' ')[0])
@@ -48,6 +42,7 @@ export default function Page() {
         const signupCode = await signUp.prepareEmailAddressVerification({
           strategy: 'email_code'
         })
+        setLoading(false)
         // console.log('signupCode ---> ', signupCode)
         router.push({
           pathname: '/(auth)/verify-email',
@@ -57,6 +52,7 @@ export default function Page() {
         // See https://clerk.com/docs/custom-flows/error-handling
         // for more info on error handling
         // console.error(JSON.stringify(err, null, 2))
+        setLoading(false)
         const error = err as any
         Alert.alert('Error in Signup', error.errors[0].longMessage, [
           { text: 'OK', onPress: () => console.log('OK Pressed') }
@@ -139,7 +135,7 @@ export default function Page() {
                 secureTextEntry
                 error={touched.password ? errors.password : undefined}
               />
-              <TouchableOpacity
+              {/* <TouchableOpacity
                 style={[
                   styles.button,
                   !values.email ||
@@ -152,7 +148,30 @@ export default function Page() {
                 onPress={() => handleSubmit()}
               >
                 <Text style={styles.buttonText}>Signup</Text>
-              </TouchableOpacity>
+              </TouchableOpacity> */}
+
+              <CustomButton
+                text="Signup"
+                loading={loading}
+                disable={
+                  loading ||
+                  !values.email ||
+                  !values.password ||
+                  (errors.email?.length ?? 0) > 0 ||
+                  (errors.password?.length ?? 0) > 0
+                }
+                onPress={handleSubmit}
+                style={[
+                  { marginTop: theme.spacing.md },
+                  loading ||
+                  !values.email ||
+                  !values.password ||
+                  errors.email?.length ||
+                  errors.password?.length
+                    ? styles.disabled
+                    : {}
+                ]}
+              />
             </View>
           )}
         </Formik>

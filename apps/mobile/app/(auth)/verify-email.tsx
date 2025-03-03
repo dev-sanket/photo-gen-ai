@@ -1,11 +1,12 @@
 import React, { useCallback, useState } from 'react'
 import { ThemedText } from '@/components/ThemedText'
 import { AppTheme, useAppTheme } from '@/theme/theme'
-import { View, Text, StyleSheet, Image } from 'react-native'
+import { View, Text, StyleSheet, Image, Alert } from 'react-native'
 import { OtpInput } from 'react-native-otp-entry'
 import { useLocalSearchParams, useRouter } from 'expo-router'
 import { Button } from 'react-native-paper'
 import { useSignUp } from '@clerk/clerk-expo'
+import CustomButton from '@/components/ui/Button'
 
 const VerifyEmailScreen = () => {
   const { signUp, setActive, isLoaded } = useSignUp()
@@ -17,15 +18,26 @@ const VerifyEmailScreen = () => {
   console.log('router parama ---->', routerParams)
 
   const [verificationCode, setVerificationCode] = useState('')
+  const [loading, setLoading] = useState(false)
 
   const onVerifyPress = useCallback(async () => {
-    // if (!isLoaded) return
-    if (signUp) {
-      console.log('Pressed --->')
-      await signUp.attemptEmailAddressVerification({
+    try {
+      if (!isLoaded) return
+
+      setLoading(true)
+
+      const verifiedUser = await signUp.attemptEmailAddressVerification({
         code: verificationCode
       })
+      await setActive({ session: verifiedUser.createdSessionId })
       router.replace('/')
+    } catch (err) {
+      //   console.error(JSON.stringify(err, null, 2))
+      setLoading(false)
+      const error = err as any
+      Alert.alert('Error in Signin', error.errors[0].longMessage, [
+        { text: 'OK', onPress: () => console.log('OK Pressed') }
+      ])
     }
   }, [])
 
@@ -64,12 +76,12 @@ const VerifyEmailScreen = () => {
             accessibilityLabel: 'One-Time Password'
           }}
           theme={{}}
-          onTextChange={(text) => setVerificationCode(text)}
+          onFilled={(text) => setVerificationCode(text)}
         />
       </View>
 
       <View style={{ width: '100%', marginTop: theme.spacing.xl }}>
-        <Button
+        {/* <Button
           mode="contained"
           rippleColor="#f7f7f9"
           style={{
@@ -86,7 +98,14 @@ const VerifyEmailScreen = () => {
           onPress={onVerifyPress}
         >
           Verify
-        </Button>
+        </Button> */}
+
+        <CustomButton
+          text="Verify Code"
+          loading={loading}
+          disable={loading}
+          onPress={onVerifyPress}
+        />
       </View>
     </View>
   )
