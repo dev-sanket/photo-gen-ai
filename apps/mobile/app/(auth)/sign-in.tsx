@@ -1,7 +1,14 @@
 import React, { useCallback } from 'react'
 import { useSignIn } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Alert
+} from 'react-native'
 import { ThemedText } from '@/components/ThemedText'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
@@ -46,7 +53,11 @@ export default function Page() {
       } catch (err) {
         // See https://clerk.com/docs/custom-flows/error-handling
         // for more info on error handling
-        console.error(JSON.stringify(err, null, 2))
+        // console.error(JSON.stringify(err, null, 2))
+        const error = err as any
+        Alert.alert('Error in Signin', error.errors[0].longMessage, [
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ])
       }
     },
     [isLoaded, signIn, setActive, router]

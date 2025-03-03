@@ -1,7 +1,14 @@
 import React, { useCallback } from 'react'
 import { useSignIn, useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import { Text, View, Image, TouchableOpacity, StyleSheet } from 'react-native'
+import {
+  Text,
+  View,
+  Image,
+  TouchableOpacity,
+  StyleSheet,
+  Alert
+} from 'react-native'
 import { ThemedText } from '@/components/ThemedText'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
@@ -31,8 +38,8 @@ export default function Page() {
 
       // Start the sign-in process using the email and password provided
       try {
-        console.log('fnme--->', values.name.split(' ')[0])
-        console.log('lnme--->', values.name.split(' ')[1])
+        // console.log('fnme--->', values.name.split(' ')[0])
+        // console.log('lnme--->', values.name.split(' ')[1])
         const signupResponse = await signUp.create({
           emailAddress: values.email,
           password: values.password
@@ -41,12 +48,19 @@ export default function Page() {
         const signupCode = await signUp.prepareEmailAddressVerification({
           strategy: 'email_code'
         })
-        console.log('signupCode ---> ', signupCode)
-        router.push('/verify-email', {})
+        // console.log('signupCode ---> ', signupCode)
+        router.push({
+          pathname: '/(auth)/verify-email',
+          params: { email: values.email }
+        })
       } catch (err) {
         // See https://clerk.com/docs/custom-flows/error-handling
         // for more info on error handling
-        console.error(JSON.stringify(err, null, 2))
+        // console.error(JSON.stringify(err, null, 2))
+        const error = err as any
+        Alert.alert('Error in Signup', error.errors[0].longMessage, [
+          { text: 'OK', onPress: () => console.log('OK Pressed') }
+        ])
       }
     },
     [isLoaded, signUp, setActive, router]
