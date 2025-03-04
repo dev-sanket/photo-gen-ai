@@ -1,7 +1,7 @@
 import React, { useCallback, useState } from 'react'
 import { useSignUp } from '@clerk/clerk-expo'
 import { Link, useRouter } from 'expo-router'
-import { Text, View, Image, StyleSheet, Alert } from 'react-native'
+import { Text, View, Image, StyleSheet, Alert, ScrollView } from 'react-native'
 import { ThemedText } from '@/components/ThemedText'
 import * as Yup from 'yup'
 import { Formik } from 'formik'
@@ -64,78 +64,81 @@ export default function Page() {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginTop: theme.spacing.xxxl * 2, alignItems: 'center' }}>
-        <Image
-          source={require('../../assets/images/icon.png')} // Change to your logo path
-          style={{ width: 100, height: 100, resizeMode: 'contain' }}
-          resizeMode="contain"
-        />
-      </View>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <View
+          style={{ marginTop: theme.spacing.xxxl * 2, alignItems: 'center' }}
+        >
+          <Image
+            source={require('../../assets/images/icon.png')} // Change to your logo path
+            style={{ width: 100, height: 100, resizeMode: 'contain' }}
+            resizeMode="contain"
+          />
+        </View>
 
-      <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
-        <ThemedText
-          type="title"
-          style={{
-            fontSize: theme.fonts.titleLarge.fontSize,
-            fontWeight: theme.fonts.labelLarge.fontWeight,
-            color: theme.colors.text
-          }}
-        >
-          Welcome to PhotoGen.AI
-        </ThemedText>
-        <ThemedText
-          type="default"
-          style={{
-            color: theme.colors.text,
-            fontSize: theme.fonts.bodyLarge.fontSize,
-            marginTop: theme.spacing.sm
-          }}
-        >
-          Sign in to start creating amazing photos
-        </ThemedText>
-      </View>
+        <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
+          <ThemedText
+            type="title"
+            style={{
+              fontSize: theme.fonts.titleLarge.fontSize,
+              fontWeight: theme.fonts.labelLarge.fontWeight,
+              color: theme.colors.text
+            }}
+          >
+            Welcome to PhotoGen.AI
+          </ThemedText>
+          <ThemedText
+            type="default"
+            style={{
+              color: theme.colors.text,
+              fontSize: theme.fonts.bodyLarge.fontSize,
+              marginTop: theme.spacing.sm
+            }}
+          >
+            Sign in to start creating amazing photos
+          </ThemedText>
+        </View>
 
-      <View style={{ marginTop: theme.spacing.md }}>
-        <Formik
-          initialValues={{ email: '', password: '', name: '' }}
-          validationSchema={validationSchema}
-          onSubmit={async (values) => await onSignUpPress(values)}
-        >
-          {({
-            handleChange,
-            handleBlur,
-            handleSubmit,
-            values,
-            errors,
-            touched
-          }) => (
-            <View style={styles.formContainer}>
-              <FormInput
-                label="Full Name"
-                value={values.name}
-                onChangeText={handleChange('name')}
-                onBlur={handleBlur('name')}
-                placeholder="Enter your full Name"
-                error={touched.name ? errors.name : undefined}
-              />
-              <FormInput
-                label="Email Address"
-                value={values.email}
-                onChangeText={handleChange('email')}
-                onBlur={handleBlur('email')}
-                placeholder="Enter your email"
-                error={touched.email ? errors.email : undefined}
-              />
-              <FormInput
-                label="Password"
-                value={values.password}
-                onChangeText={handleChange('password')}
-                onBlur={handleBlur('password')}
-                placeholder="Enter your password"
-                secureTextEntry
-                error={touched.password ? errors.password : undefined}
-              />
-              {/* <TouchableOpacity
+        <View style={{ marginTop: theme.spacing.md }}>
+          <Formik
+            initialValues={{ email: '', password: '', name: '' }}
+            validationSchema={validationSchema}
+            onSubmit={async (values) => await onSignUpPress(values)}
+          >
+            {({
+              handleChange,
+              handleBlur,
+              handleSubmit,
+              values,
+              errors,
+              touched
+            }) => (
+              <View style={styles.formContainer}>
+                <FormInput
+                  label="Full Name"
+                  value={values.name}
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  placeholder="Enter your full Name"
+                  error={touched.name ? errors.name : undefined}
+                />
+                <FormInput
+                  label="Email Address"
+                  value={values.email}
+                  onChangeText={handleChange('email')}
+                  onBlur={handleBlur('email')}
+                  placeholder="Enter your email"
+                  error={touched.email ? errors.email : undefined}
+                />
+                <FormInput
+                  label="Password"
+                  value={values.password}
+                  onChangeText={handleChange('password')}
+                  onBlur={handleBlur('password')}
+                  placeholder="Enter your password"
+                  secureTextEntry
+                  error={touched.password ? errors.password : undefined}
+                />
+                {/* <TouchableOpacity
                 style={[
                   styles.button,
                   !values.email ||
@@ -150,46 +153,47 @@ export default function Page() {
                 <Text style={styles.buttonText}>Signup</Text>
               </TouchableOpacity> */}
 
-              <CustomButton
-                text="Signup"
-                loading={loading}
-                disable={
-                  loading ||
-                  !values.email ||
-                  !values.password ||
-                  (errors.email?.length ?? 0) > 0 ||
-                  (errors.password?.length ?? 0) > 0
-                }
-                onPress={handleSubmit}
-                style={[
-                  { marginTop: theme.spacing.md },
-                  loading ||
-                  !values.email ||
-                  !values.password ||
-                  errors.email?.length ||
-                  errors.password?.length
-                    ? styles.disabled
-                    : {}
-                ]}
-              />
-            </View>
-          )}
-        </Formik>
-      </View>
+                <CustomButton
+                  text="Signup"
+                  loading={loading}
+                  disable={
+                    loading ||
+                    !values.email ||
+                    !values.password ||
+                    (errors.email?.length ?? 0) > 0 ||
+                    (errors.password?.length ?? 0) > 0
+                  }
+                  onPress={handleSubmit}
+                  style={[
+                    { marginTop: theme.spacing.md },
+                    loading ||
+                    !values.email ||
+                    !values.password ||
+                    errors.email?.length ||
+                    errors.password?.length
+                      ? styles.disabled
+                      : {}
+                  ]}
+                />
+              </View>
+            )}
+          </Formik>
+        </View>
 
-      <View
-        style={{
-          alignItems: 'center',
-          marginTop: theme.spacing.lg,
-          flexDirection: 'row',
-          justifyContent: 'center'
-        }}
-      >
-        <Text>Already have an account?</Text>
-        <Link href="../sign-in" style={{ marginLeft: 5, color: '#6366f1' }}>
-          <Text>Sign in</Text>
-        </Link>
-      </View>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: theme.spacing.lg,
+            flexDirection: 'row',
+            justifyContent: 'center'
+          }}
+        >
+          <Text>Already have an account?</Text>
+          <Link href="../sign-in" style={{ marginLeft: 5, color: '#6366f1' }}>
+            <Text>Sign in</Text>
+          </Link>
+        </View>
+      </ScrollView>
     </View>
   )
 }

@@ -7,7 +7,8 @@ import {
   Image,
   TouchableOpacity,
   StyleSheet,
-  Alert
+  Alert,
+  ScrollView
 } from 'react-native'
 import { ThemedText } from '@/components/ThemedText'
 import * as Yup from 'yup'
@@ -26,8 +27,8 @@ export default function Page() {
   const styles = getStyles(theme)
 
   const validationSchema = Yup.object({
-    email: Yup.string().email('Invalid email').required('Required'),
-    password: Yup.string().min(6, 'Too short!').required('Required')
+    email: Yup.string().email('Invalid email').required('Email is required'),
+    password: Yup.string().min(6, 'Too short!').required('Password is required')
   })
 
   // Handle the submission of the sign-in form
@@ -67,72 +68,68 @@ export default function Page() {
 
   return (
     <View style={{ flex: 1 }}>
-      <View style={{ marginTop: theme.spacing.xxxl, alignItems: 'center' }}>
-        <Image
-          source={require('../../assets/images/icon.png')} // Change to your logo path
-          style={{ width: 100, height: 100, resizeMode: 'contain' }}
-          resizeMode="contain"
-        />
-      </View>
-
-      <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
-        <ThemedText
-          type="title"
-          style={{
-            fontSize: theme.fonts.titleLarge.fontSize,
-            fontWeight: theme.fonts.labelLarge.fontWeight,
-            color: theme.colors.text
-          }}
-        >
-          Welcome to PhotoGen.AI
-        </ThemedText>
-        <ThemedText
-          type="default"
-          style={{
-            color: theme.colors.text,
-            fontSize: theme.fonts.bodyLarge.fontSize,
-            marginTop: theme.spacing.sm
-          }}
-        >
-          Sign in to start creating amazing photos
-        </ThemedText>
-      </View>
-
-      <View style={styles.socialButtonsContainer}>
-        <SocialLoginButton strategy="facebook" />
-        <SocialLoginButton strategy="google" />
-        <SocialLoginButton strategy="apple" />
-      </View>
-
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          marginTop: theme.spacing.md,
-          padding: theme.spacing.md,
-          alignSelf: 'center'
-        }}
-      >
-        <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
-        <View>
-          <Text
-            style={{ textAlign: 'center', color: theme.colors.text, margin: 5 }}
-          >
-            Or continue with
-          </Text>
+      <ScrollView keyboardShouldPersistTaps="handled">
+        <View style={{ marginTop: theme.spacing.xxxl, alignItems: 'center' }}>
+          <Image
+            source={require('../../assets/images/icon.png')} // Change to your logo path
+            style={{ width: 100, height: 100, resizeMode: 'contain' }}
+            resizeMode="contain"
+          />
         </View>
-        <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
-      </View>
 
-      <View
-        style={
-          {
-            // marginTop: theme.spacing.md,
-            // borderColor: 'red',
-            // borderWidth: 1
-          }
-        }
-      >
+        <View style={{ alignItems: 'center', marginTop: theme.spacing.lg }}>
+          <ThemedText
+            type="title"
+            style={{
+              fontSize: theme.fonts.titleLarge.fontSize,
+              fontWeight: theme.fonts.labelLarge.fontWeight,
+              color: theme.colors.text
+            }}
+          >
+            Welcome to PhotoGen.AI
+          </ThemedText>
+          <ThemedText
+            type="default"
+            style={{
+              color: theme.colors.text,
+              fontSize: theme.fonts.bodyLarge.fontSize,
+              marginTop: theme.spacing.sm
+            }}
+          >
+            Sign in to start creating amazing photos
+          </ThemedText>
+        </View>
+
+        <View style={styles.socialButtonsContainer}>
+          <SocialLoginButton strategy="facebook" />
+          <SocialLoginButton strategy="google" />
+          <SocialLoginButton strategy="apple" />
+        </View>
+
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: theme.spacing.md,
+            padding: theme.spacing.md,
+            alignSelf: 'center'
+          }}
+        >
+          <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
+          <View>
+            <Text
+              style={{
+                textAlign: 'center',
+                color: theme.colors.text,
+                margin: 5
+              }}
+            >
+              Or continue with
+            </Text>
+          </View>
+          <View style={{ flex: 1, height: 1, backgroundColor: '#e5e7eb' }} />
+        </View>
+
         <Formik
           initialValues={{ email: '', password: '' }}
           validationSchema={validationSchema}
@@ -204,21 +201,21 @@ export default function Page() {
             </View>
           )}
         </Formik>
-      </View>
 
-      <View
-        style={{
-          alignItems: 'center',
-          marginTop: theme.spacing.lg,
-          flexDirection: 'row',
-          justifyContent: 'center'
-        }}
-      >
-        <Text>Don't have an account?</Text>
-        <Link href="../sign-up" style={{ marginLeft: 5, color: '#6366f1' }}>
-          <Text>Sign up</Text>
-        </Link>
-      </View>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: theme.spacing.lg,
+            flexDirection: 'row',
+            justifyContent: 'center'
+          }}
+        >
+          <Text>Don't have an account?</Text>
+          <Link href="../sign-up" style={{ marginLeft: 5, color: '#6366f1' }}>
+            <Text>Sign up</Text>
+          </Link>
+        </View>
+      </ScrollView>
     </View>
   )
 }
