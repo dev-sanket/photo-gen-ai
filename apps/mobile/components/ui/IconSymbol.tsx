@@ -12,7 +12,12 @@ const MAPPING = {
   'house.fill': 'home',
   'paperplane.fill': 'send',
   'chevron.left.forwardslash.chevron.right': 'code',
-  'chevron.right': 'chevron-right'
+  'chevron.right': 'chevron-right',
+  'person.circle.fill': 'person',
+  plus: 'add',
+  gift: 'card-giftcard',
+  'photo.fill': 'image',
+  'pencil.and.ellipsis.rectangle': 'edit-document'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],

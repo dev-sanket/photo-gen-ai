@@ -30,13 +30,13 @@ const IconButton: React.FC<IconButtonProps> = ({
   return (
     <TouchableOpacity
       style={{
-        borderWidth: 1,
-        borderColor: 'rgba(42, 42, 42, 0.2)',
-        alignItems: 'center',
-        justifyContent: 'center',
-        width: 100,
-        height: 100,
-        backgroundColor: '#fff',
+        // borderWidth: 1,
+        // borderColor: 'rgba(42, 42, 42, 0.2)',
+        // alignItems: 'center',
+        // justifyContent: 'center',
+        // width: 100,
+        // height: 100,
+        // backgroundColor: '#fff',
         ...StyleSheet.flatten(style)
       }}
       onPress={onPress}

@@ -35,6 +35,8 @@ export default function Page() {
         // console.log('fnme--->', values.name.split(' ')[0])
         // console.log('lnme--->', values.name.split(' ')[1])
         const signupResponse = await signUp.create({
+          firstName: values.name.split(' ')[0] || values.name,
+          lastName: values.name.split(' ')[1] || '',
           emailAddress: values.email,
           password: values.password
         })
@@ -164,16 +166,7 @@ export default function Page() {
                     (errors.password?.length ?? 0) > 0
                   }
                   onPress={handleSubmit}
-                  style={[
-                    { marginTop: theme.spacing.md },
-                    loading ||
-                    !values.email ||
-                    !values.password ||
-                    errors.email?.length ||
-                    errors.password?.length
-                      ? styles.disabled
-                      : {}
-                  ]}
+                  style={{ marginTop: theme.spacing.md }}
                 />
               </View>
             )}

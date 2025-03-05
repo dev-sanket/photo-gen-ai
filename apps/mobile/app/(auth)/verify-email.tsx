@@ -21,17 +21,19 @@ const VerifyEmailScreen = () => {
   const [verificationCode, setVerificationCode] = useState('')
   const [loading, setLoading] = useState(false)
 
-  const onVerifyPress = useCallback(async () => {
+  const onVerifyPress = async () => {
     try {
       if (!isLoaded) return
 
       setLoading(true)
-
-      const verifiedUser = await signUp.attemptEmailAddressVerification({
+      console.log('OTP--->', verificationCode)
+      const completeSignUp = await signUp.attemptEmailAddressVerification({
         code: verificationCode
       })
-      await setActive({ session: verifiedUser.createdSessionId })
-      router.replace('/')
+      if (completeSignUp.status === 'complete') {
+        await setActive({ session: completeSignUp.createdSessionId })
+        router.replace('/')
+      }
     } catch (err) {
       //   console.error(JSON.stringify(err, null, 2))
       setLoading(false)
@@ -40,7 +42,7 @@ const VerifyEmailScreen = () => {
         { text: 'OK', onPress: () => console.log('OK Pressed') }
       ])
     }
-  }, [])
+  }
 
   return (
     <View style={styles.container}>
@@ -121,7 +123,10 @@ const VerifyEmailScreen = () => {
               accessibilityLabel: 'One-Time Password'
             }}
             theme={{}}
-            onFilled={(text) => setVerificationCode(text)}
+            onFilled={(text) => {
+              console.log('OTP ----> ', text)
+              setVerificationCode(text)
+            }}
           />
         </View>
       </ScrollView>

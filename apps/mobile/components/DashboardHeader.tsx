@@ -1,11 +1,20 @@
-import { View, Text, StyleSheet, Image, TouchableOpacity } from 'react-native'
-import React from 'react'
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  TouchableOpacity,
+  Platform,
+  ActivityIndicator,
+  Animated
+} from 'react-native'
+import React, { useEffect, useRef, useState } from 'react'
 import { AppTheme, useAppTheme } from '@/theme/theme'
 import { ThemedText } from './ThemedText'
 import { UserResource } from '@clerk/types'
-import { Ionicons } from '@expo/vector-icons'
-import { IconSymbol } from './ui/IconSymbol'
 import { useRouter } from 'expo-router'
+import IconButton from './IconButton'
+import { Avatar } from 'react-native-paper'
 
 interface DashboardHeaderProps {
   user: UserResource
@@ -19,20 +28,38 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   const theme = useAppTheme()
   const router = useRouter()
   const styles = getStyles(theme)
+  const [userImageLoading, setUserImageLoading] = useState(false)
+
+  const scrollY = useRef(new Animated.Value(0)).current
+
+  const headerHeight = scrollY.interpolate({
+    inputRange: [0, 200], // Scroll range
+    outputRange: [60, 0], // Header size range
+    extrapolate: 'clamp' // Clamp the values
+  })
 
   return (
-    <View style={styles.container}>
+    <Animated.View
+      style={[
+        styles.container,
+        {
+          paddingTop:
+            Platform.OS === 'ios' ? theme.spacing.xxxl : theme.spacing.xxl
+        }
+      ]}
+    >
       <ThemedText type="subtitle" style={{ color: theme.colors.text }}>
         {headerText || 'PhotoGen.AI'}
       </ThemedText>
       <View style={styles.rightContainer}>
-        <View style={styles.walletContainer}>
-          <IconSymbol
-            name="plus.circle"
-            size={18}
-            color={theme.colors.warning}
-            style={{ marginRight: theme.spacing.xs }}
-          />
+        <IconButton
+          icon="plus"
+          iconPosition="left"
+          size={18}
+          color={theme.colors.warning}
+          style={styles.walletContainer}
+          onPress={() => console.log('Pressed')}
+        >
           <ThemedText
             type="default"
             style={{
@@ -42,21 +69,31 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           >
             $500 coins
           </ThemedText>
-        </View>
-        <TouchableOpacity
-          onPress={() => router.push(`/(tabs)/(profile)/${user.id}`)}
-        >
-          <Image
-            source={{ uri: user.imageUrl }}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 50
-            }}
-          />
-        </TouchableOpacity>
+        </IconButton>
+
+        {userImageLoading ? (
+          <ActivityIndicator animating={true} size={'small'} />
+        ) : (
+          <TouchableOpacity
+            style={{ width: 32, height: 32 }}
+            onPress={() => router.push(`/(tabs)/(profile)/${user.id}`)}
+          >
+            <Avatar.Image
+              source={{ uri: user.imageUrl }}
+              size={32}
+              onLoadStart={() => {
+                // console.log('Image loading start')
+                setUserImageLoading(true)
+              }}
+              onLoad={() => {
+                // console.log('Image loading end')
+                setUserImageLoading(false)
+              }}
+            />
+          </TouchableOpacity>
+        )}
       </View>
-    </View>
+    </Animated.View>
   )
 }
 
@@ -64,7 +101,7 @@ const getStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       width: '100%',
-      paddingTop: theme.spacing.xxxl,
+      // paddingTop: theme.spacing.xxl,
       padding: theme.spacing.md,
       backgroundColor: theme.colors.background,
       flexDirection: 'row',
@@ -80,12 +117,12 @@ const getStyles = (theme: AppTheme) =>
     },
     rightContainer: {
       flexDirection: 'row',
-      flex: 0.7,
+      flex: 0.6,
       justifyContent: 'space-around',
       alignItems: 'center'
     },
     walletContainer: {
-      marginTop: theme.spacing.xs,
+      // marginTop: theme.spacing.xs,
       justifyContent: 'center',
       paddingHorizontal: 5,
       paddingVertical: 2,

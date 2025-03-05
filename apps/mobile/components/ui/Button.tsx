@@ -1,14 +1,7 @@
 import React from 'react'
-import {
-  View,
-  Text,
-  StyleProp,
-  ViewStyle,
-  StyleSheet,
-  TextStyle
-} from 'react-native'
+import { StyleProp, ViewStyle, StyleSheet, TextStyle } from 'react-native'
 import { Button } from 'react-native-paper'
-import { useAppTheme } from '@/theme/theme'
+import { AppTheme, useAppTheme } from '@/theme/theme'
 
 interface CustomButtonProps {
   text: string
@@ -29,25 +22,30 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   children
 }) => {
   const theme = useAppTheme()
+  const styles = getStyles(theme)
+
   return (
     <Button
       mode="contained"
       rippleColor="#f7f7f9"
-      style={{
-        width: '100%',
-        backgroundColor: theme.colors.primary,
-        borderRadius: theme.roundness,
-        // iOS Shadow
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
+      style={[
+        {
+          width: '100%',
+          backgroundColor: theme.colors.primary,
+          borderRadius: theme.roundness,
+          // iOS Shadow
+          shadowColor: '#000',
+          shadowOffset: { width: 0, height: 2 },
+          shadowOpacity: 0.25,
+          shadowRadius: 3.84,
 
-        // Android Shadow
-        elevation: 4, // Higher value = stronger shadow
+          // Android Shadow
+          elevation: 4, // Higher value = stronger shadow
 
-        ...StyleSheet.flatten(style)
-      }}
+          ...StyleSheet.flatten(style)
+        },
+        disable && styles.disabled
+      ]}
       labelStyle={{
         fontSize: theme.fonts.titleMedium.fontSize,
         fontWeight: theme.fonts.titleMedium.fontWeight,
@@ -63,4 +61,9 @@ const CustomButton: React.FC<CustomButtonProps> = ({
     </Button>
   )
 }
+
+const getStyles = (theme: AppTheme) =>
+  StyleSheet.create({
+    disabled: { backgroundColor: '#aaa' }
+  })
 export default CustomButton
