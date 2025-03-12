@@ -143,7 +143,7 @@ export default function DashboardHomeScreen() {
                 type="default"
                 style={[styles.quickActionHeadingText, { marginTop: 0 }]}
               >
-                Generated Images
+                Recent Images
               </ThemedText>
               <Link href="/sign-up" style={{ marginLeft: 5, color: '#6366f1' }}>
                 <Text>{'View All >>'}</Text>
@@ -285,7 +285,7 @@ export default function DashboardHomeScreen() {
             </View>
           </View>
         </View>
-        <View style={{ height: 100 }}></View>
+        <View style={{ height: 70 }}></View>
       </ScrollView>
     </View>
   )

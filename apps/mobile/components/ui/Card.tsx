@@ -1,25 +1,53 @@
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, StyleSheet, StyleProp, ViewStyle } from 'react-native'
 import React from 'react'
 import { AppTheme, useAppTheme } from '@/theme/theme'
 import { ThemedText } from '../ThemedText'
 
 interface CardProps {
-  cardHeadingText: string
   children?: React.ReactNode
+  headerChildren?: React.ReactNode
+  bodyContainerStyle?: StyleProp<ViewStyle>
+  headerContainerStyle?: StyleProp<ViewStyle>
+  style?: StyleProp<ViewStyle>
 }
 
-const Card: React.FC<CardProps> = ({ cardHeadingText, children }) => {
+const CustomCard: React.FC<CardProps> = ({
+  headerChildren,
+  children,
+  bodyContainerStyle,
+  headerContainerStyle,
+  style
+}) => {
   const theme = useAppTheme()
   const styles = getStyles(theme)
-  return (
-    <View style={styles.cardContainer}>
-      <View style={{ flexDirection: 'row' }}>
-        <ThemedText type="default" style={styles.cardHeadingText}>
-          {cardHeadingText}
-        </ThemedText>
-      </View>
 
-      {children}
+  return (
+    <View
+      style={[
+        styles.cardContainer,
+        {
+          ...StyleSheet.flatten(style)
+        }
+      ]}
+    >
+      <View
+        style={{
+          flexDirection: 'row',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          ...StyleSheet.flatten(headerContainerStyle)
+        }}
+      >
+        {headerChildren}
+      </View>
+      <View
+        style={{
+          marginTop: theme.spacing.md,
+          ...StyleSheet.flatten(bodyContainerStyle)
+        }}
+      >
+        {children}
+      </View>
     </View>
   )
 }
@@ -49,4 +77,4 @@ const getStyles = (theme: AppTheme) =>
       fontWeight: theme.fonts.labelLarge.fontWeight
     }
   })
-export default Card
+export default CustomCard

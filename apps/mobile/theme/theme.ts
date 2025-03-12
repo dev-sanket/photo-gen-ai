@@ -13,7 +13,8 @@ export const lightTheme = {
     success: '#4CAF50',
     warning: '#FFC107',
     info: '#2196F3',
-    text: '#212121'
+    text: '#212121',
+    textLight: '#666666'
   },
   spacing: {
     xs: 4,
@@ -39,7 +40,8 @@ export const darkTheme = {
     success: '#81C784',
     warning: '#FFCA28',
     info: '#64B5F6',
-    text: '#E0E0E0'
+    text: '#E0E0E0',
+    textLight: '#999999'
   },
   spacing: {
     xs: 4,

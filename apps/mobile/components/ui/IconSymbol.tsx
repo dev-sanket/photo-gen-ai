@@ -17,7 +17,8 @@ const MAPPING = {
   plus: 'add',
   gift: 'card-giftcard',
   'photo.fill': 'image',
-  'pencil.and.ellipsis.rectangle': 'edit-document'
+  'pencil.and.ellipsis.rectangle': 'edit-document',
+  minus: 'remove'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
