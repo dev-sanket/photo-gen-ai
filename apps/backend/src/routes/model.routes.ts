@@ -7,6 +7,6 @@ const router = express.Router()
 const modelController = new ModelController()
 
 router.post('/pre-signed-url', asyncHandler(modelController.createPresignedUrl))
-// router.post('train')
+router.post('train', asyncHandler(modelController.trainModel))
 
 export default router

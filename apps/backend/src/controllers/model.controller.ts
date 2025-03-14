@@ -9,4 +9,7 @@ export class ModelController {
   async createPresignedUrl(): Promise<string> {
     return ''
   }
+  async trainModel(): Promise<string> {
+    return ''
+  }
 }
