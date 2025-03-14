@@ -1,12 +1,17 @@
 {
-    "compilerOptions": {
-      "outDir": "./dist",
-      "rootDir": "./src",
-      "strict": true,
-      "baseUrl": "./",
-      "paths": {
-        "@common/types": ["src/types"]
-      }
+  "compilerOptions": {
+    "skipLibCheck": true,
+    "declaration": true,
+    "module": "ESNext",
+    "target": "ESNext",
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "strict": false,
+    "baseUrl": "./",
+    "paths": {
+      "@common/*": ["src/*"]
     },
-    "include": ["src"]
+    "moduleResolution": "Node"
+  },
+  "include": ["src"]
 }
