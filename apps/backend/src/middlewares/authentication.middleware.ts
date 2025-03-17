@@ -1,6 +1,6 @@
+import { Request, Response, NextFunction } from 'express'
 import { clerkClient } from '@clerk/clerk-sdk-node'
 import { verifyToken } from '@clerk/backend'
-import { Request, Response, NextFunction } from 'express'
 
 // Middleware to verify the token
 export const verifyClerkJWTToken = async (
@@ -28,11 +28,12 @@ export const verifyClerkJWTToken = async (
       return
     }
     // Add the session and user to the request object
-    // req.session = decodedJwt
-    // req.userId = decodedJwt.sub
+    // Add the session and user to the request object
+    req.session = decodedJwt
+    req.userId = decodedJwt.sub
 
     // Get the user information
-    // req.user = await clerkClient.users.getUser(decodedJwt.sub)
+    req.user = await clerkClient.users.getUser(decodedJwt.sub)
 
     next()
   } catch (error) {
