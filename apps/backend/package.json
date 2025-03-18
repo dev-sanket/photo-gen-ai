@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "npm run build && node build/index.js",
-    "start:dev": "npx nodemon src/index.ts",
-    "build": "rimraf ./build && tsc",
+    "start": "npm run dist && node dist/index.js",
+    "start:dev": "npx nodemon index.ts",
+    "build": "rimraf ./dist && tsc --outDir dist --project tsconfig.json",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
   "keywords": [],

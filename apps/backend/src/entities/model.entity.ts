@@ -8,7 +8,6 @@ import {
 } from 'common'
 import { BaseModel } from './base.entity'
 import { User } from './user.entity'
-import { IOutPutImages } from 'packages/common/dist/types/output-images.types'
 import { OutputImages } from './output-images.entity'
 
 @Entity({ name: 'models' })

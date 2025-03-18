@@ -1,6 +1,6 @@
-import app from './app'
-import { logger } from './utils'
-import { connectDatabase } from './config/database'
+import app from './src/app'
+import { logger } from './src/utils'
+import { connectDatabase } from './src/config/database'
 import dotenv from 'dotenv'
 
 dotenv.config()

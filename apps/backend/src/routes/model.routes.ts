@@ -1,16 +1,17 @@
 import express from 'express'
-import { asyncHandler } from '../utils/index'
+import { asyncHandler, bindControllerMethods } from '../utils/index'
 import { ModelController } from '../controllers/model.controller'
 import { verifyClerkJWTToken } from '../middlewares'
 
 const router = express.Router()
 
 const modelController = new ModelController()
+const modelBindController = bindControllerMethods(modelController)
 
-router.post(
+router.get(
   '/pre-signed-url',
   verifyClerkJWTToken,
-  asyncHandler(modelController.createPresignedUrl)
+  asyncHandler(modelBindController.createPresignedUrl)
 )
 router.post('train', asyncHandler(modelController.trainModel))
 

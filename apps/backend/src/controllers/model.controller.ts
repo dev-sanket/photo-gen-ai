@@ -1,6 +1,6 @@
 import { ApiResponse } from 'common'
 import { ModelService } from '../services/model.service'
-import { NextFunction } from 'express'
+import { NextFunction, Request, Response } from 'express'
 
 export class ModelController {
   private modelService: ModelService
@@ -8,16 +8,20 @@ export class ModelController {
   constructor() {
     this.modelService = new ModelService()
   }
-  async createPresignedUrl(
+  public async createPresignedUrl(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<ApiResponse<object>> {
+    const userId = req.userId as string
+    const presignedUrl = await this.modelService.createPresignedUrl(userId)
+    return { data: { presignedUrl }, message: 'Success', status: 200 }
+  }
+  async trainModel(
     req: Request,
     res: Response,
     next: NextFunction
   ): Promise<ApiResponse<string>> {
-    const userId = req.userId
-    const presignedUrl = await this.modelService.createPresignedUrl(userId)
-    return { data: presignedUrl, message: 'Success', status: 200 }
-  }
-  async trainModel(): Promise<string> {
-    return ''
+    return { data: '', message: 'Success', status: 200 }
   }
 }

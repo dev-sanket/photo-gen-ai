@@ -20,7 +20,7 @@ export const verifyClerkJWTToken = async (
 
     // Verify the session token
     const decodedJwt = await verifyToken(token, {
-      secretKey: process.env.CLERK_SECRET_KEY
+      jwtKey: process.env.CLERK_JWT_PUBLIC_KEY
     })
 
     if (!decodedJwt) {

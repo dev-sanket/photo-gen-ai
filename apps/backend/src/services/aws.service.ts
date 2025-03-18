@@ -27,7 +27,6 @@ export class AWSService {
         expiresIn: this.expirationSeconds
       })
 
-      console.log('Pre-signed URL:', presignedUrl)
       return presignedUrl
     } catch (err) {
       console.error('Error generating pre-signed URL:', err)
