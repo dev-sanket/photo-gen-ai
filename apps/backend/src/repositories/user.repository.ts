@@ -15,6 +15,9 @@ export class UserRepository {
   async getById(id: number): Promise<User | null> {
     return this.userRepo.findOneBy({ id })
   }
+  async getByClerkId(id: string): Promise<User | null> {
+    return this.userRepo.findOneBy({ clerkId: id })
+  }
 
   async create(user: Partial<User>): Promise<User> {
     const newUser = this.userRepo.create(user)

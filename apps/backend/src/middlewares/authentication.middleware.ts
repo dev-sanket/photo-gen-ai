@@ -1,7 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
 import { clerkClient } from '@clerk/clerk-sdk-node'
 import { verifyToken } from '@clerk/backend'
+import { UserRepository } from '../repositories/user.repository'
 
+const userRepository = new UserRepository()
 // Middleware to verify the token
 export const verifyClerkJWTToken = async (
   req: Request,
@@ -32,9 +34,8 @@ export const verifyClerkJWTToken = async (
     req.session = decodedJwt
     req.userId = decodedJwt.sub
 
-    // Get the user information
+    // Get the user information from the Clerk API
     req.user = await clerkClient.users.getUser(decodedJwt.sub)
-
     next()
   } catch (error) {
     console.error('Token verification error:', error)

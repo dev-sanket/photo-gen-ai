@@ -18,6 +18,12 @@ export abstract class BaseRepository<T extends ObjectLiteral> {
     this.repository = dataSource.getRepository<T>(entity)
   }
 
+  async find(
+    where: FindOptionsWhere<T>,
+    options?: FindManyOptions<T>
+  ): Promise<T[]> {
+    return this.repository.find({ where, ...options })
+  }
   async findAll(options?: FindManyOptions<T>): Promise<T[]> {
     return this.repository.find(options)
   }

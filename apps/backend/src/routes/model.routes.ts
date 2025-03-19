@@ -8,6 +8,7 @@ const router = express.Router()
 const modelController = new ModelController()
 const modelBindController = bindControllerMethods(modelController)
 
+router.get('/', asyncHandler(modelController.getModelsByUser))
 router.get(
   '/pre-signed-url',
   verifyClerkJWTToken,
