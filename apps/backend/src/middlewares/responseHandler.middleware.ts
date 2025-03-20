@@ -7,7 +7,11 @@ export const responseHandler = (
   next: NextFunction
 ) => {
   res.locals.sendResponse = (data: any, message = 'Success', status = 200) => {
-    return { message, data, status }
+    return {
+      message,
+      data,
+      status
+    }
   }
 
   res.locals.sendError = (message = 'Error', status = 500, error?: any) => {
@@ -20,7 +24,6 @@ export const responseHandler = (
 
   next()
 }
-
 // Final middleware to send all responses
 export const finalResponseHandler = (
   result: any,
@@ -33,13 +36,13 @@ export const finalResponseHandler = (
   const { success, message, data, error, status } = result
 
   res.status(status || 200).json({
-    success,
     message,
     ...(success
       ? { data }
       : {
+          status: status || 500,
           error,
-          stack: process.env.NODE_ENV === 'development' ? error?.stack : []
+          errorCode: error?.name || 'UNKNOWN_ERROR'
         })
   })
 }

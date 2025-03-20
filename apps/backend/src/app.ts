@@ -1,6 +1,10 @@
 import express from 'express'
 import APIRoutes from './routes/api/index'
-import { responseHandler, finalResponseHandler } from './middlewares'
+import {
+  responseHandler,
+  finalResponseHandler,
+  errorHandler
+} from './middlewares'
 
 const app = express()
 
@@ -15,6 +19,9 @@ app.use((req, res, next) => {
   res.status(404).json({ message: 'Not Found' })
 })
 
-app.use(finalResponseHandler) // Global response handler
+// Error handling middleware
+app.use(errorHandler)
 
+// Final response handler middleware
+app.use(finalResponseHandler)
 export default app

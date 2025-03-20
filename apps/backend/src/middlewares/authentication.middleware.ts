@@ -2,7 +2,9 @@ import { Request, Response, NextFunction } from 'express'
 import { clerkClient } from '@clerk/clerk-sdk-node'
 import { verifyToken } from '@clerk/backend'
 import { UserRepository } from '../repositories/user.repository'
+import { errorTypes } from '../utils'
 
+const { UnauthorizedError, BadRequestError } = errorTypes
 const userRepository = new UserRepository()
 // Middleware to verify the token
 export const verifyClerkJWTToken = async (
@@ -14,8 +16,7 @@ export const verifyClerkJWTToken = async (
     // Get the token from the Authorization header
     const authHeader = req.headers.authorization
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
-      res.status(401).json({ error: 'Unauthorized: No token provided' })
-      return
+      throw new UnauthorizedError('Unauthorized: No token provided')
     }
 
     const token = authHeader.split(' ')[1]
@@ -26,8 +27,7 @@ export const verifyClerkJWTToken = async (
     })
 
     if (!decodedJwt) {
-      res.status(401).json({ error: 'Unauthorized: Invalid token' })
-      return
+      throw new UnauthorizedError('Unauthorized: Invalid token')
     }
     // Add the session and user to the request object
     // Add the session and user to the request object
@@ -39,7 +39,6 @@ export const verifyClerkJWTToken = async (
     next()
   } catch (error) {
     console.error('Token verification error:', error)
-    res.status(401).json({ error: 'Unauthorized: Invalid token' })
-    return
+    next(new UnauthorizedError('Unauthorized: Invalid token'))
   }
 }

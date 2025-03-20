@@ -3,6 +3,9 @@ import { AppDataSource } from '../config/database'
 import { ModelRepository } from '../repositories/mode.repository'
 import { AWSService } from './aws.service'
 import { UserRepository } from '../repositories/user.repository'
+import { errorTypes } from '../utils'
+
+const { ResourceNotFoundError } = errorTypes
 
 export class ModelService {
   private modelRepository: ModelRepository
@@ -21,7 +24,9 @@ export class ModelService {
     limit: number = 10
   ): Promise<IModel[]> {
     const user = await this.userRepository.getByClerkId(userId)
-
+    if (!user) {
+      throw new ResourceNotFoundError('User', userId)
+    }
     const models = await this.modelRepository.find(
       { userId: user?.id },
       {
@@ -42,10 +47,12 @@ export class ModelService {
 
   async trainModel(requestBody: IModel, userId: string): Promise<IModel> {
     const user = await this.userRepository.getByClerkId(userId)
-
+    if (!user) {
+      throw new ResourceNotFoundError('User', userId)
+    }
     const model: IModel = {
       ...requestBody,
-      userId: user?.id || 0
+      userId: user?.id
     }
 
     return await this.modelRepository.create(model)

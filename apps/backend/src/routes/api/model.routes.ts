@@ -8,12 +8,16 @@ const router = express.Router()
 const modelController = new ModelController()
 const modelBindController = bindControllerMethods(modelController)
 
-router.get('/', asyncHandler(modelController.getModelsByUser))
+router.get(
+  '/',
+  verifyClerkJWTToken,
+  asyncHandler(modelBindController.getModelsByUser)
+)
 router.get(
   '/pre-signed-url',
   verifyClerkJWTToken,
   asyncHandler(modelBindController.createPresignedUrl)
 )
-router.post('train', asyncHandler(modelController.trainModel))
+router.post('train', asyncHandler(modelBindController.trainModel))
 
 export default router
