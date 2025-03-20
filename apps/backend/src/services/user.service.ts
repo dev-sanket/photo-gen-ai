@@ -11,4 +11,8 @@ export class UserService {
   async getAllUsers(): Promise<IUser[]> {
     return await this.userRepository.getAll()
   }
+
+  async createOrUpdate(user: IUser): Promise<IUser> {
+    return await this.userRepository.createOrUpdate(user)
+  }
 }
