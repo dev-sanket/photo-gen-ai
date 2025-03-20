@@ -1,7 +1,7 @@
 import express from 'express'
-import { asyncHandler, bindControllerMethods } from '../utils/index'
-import { ModelController } from '../controllers/model.controller'
-import { verifyClerkJWTToken } from '../middlewares'
+import { asyncHandler, bindControllerMethods } from '../../utils/index'
+import { ModelController } from '../../controllers/model.controller'
+import { verifyClerkJWTToken } from '../../middlewares'
 
 const router = express.Router()
 
