@@ -1,6 +1,0 @@
-export * from './gender.enum'
-export * from './eye-color.enum'
-export * from './ethnicity.enum'
-export * from './model-training-status.enum'
-export * from './output-generated-status.enum'
-export * from './error-codes.enum'

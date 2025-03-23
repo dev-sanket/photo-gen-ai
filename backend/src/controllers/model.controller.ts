@@ -1,6 +1,5 @@
 import { ModelService } from '../services/model.service'
-import { NextFunction, Request, Response } from 'express'
-import { UserService } from '../services/user.service'
+import { Request } from 'express'
 import { ApiResponse, IModel } from '../types'
 
 export class ModelController {
@@ -9,11 +8,7 @@ export class ModelController {
   constructor() {
     this.modelService = new ModelService()
   }
-  public async getModelsByUser(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<ApiResponse<IModel[]>> {
+  public async getModelsByUser(req: Request): Promise<ApiResponse<IModel[]>> {
     const userId = req.userId as string
     const { skip = '0', limit = '10' } = req.params
     const data = await this.modelService.getModelsByUser(
@@ -24,20 +19,13 @@ export class ModelController {
     return { data, message: 'Success', status: 200 }
   }
 
-  public async createPresignedUrl(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<ApiResponse<object>> {
+  public async createPresignedUrl(req: Request): Promise<ApiResponse<object>> {
     const userId = req.userId as string
     const presignedUrl = await this.modelService.createPresignedUrl(userId)
     return { data: { presignedUrl }, message: 'Success', status: 200 }
   }
-  async trainModel(
-    req: Request,
-    res: Response,
-    next: NextFunction
-  ): Promise<ApiResponse<IModel>> {
+
+  async trainModel(req: Request): Promise<ApiResponse<IModel>> {
     const userId = req.userId as string
     const requestBody = req.body as IModel
     const createdModel = await this.modelService.trainModel(requestBody, userId)
