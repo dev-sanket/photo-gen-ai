@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express'
 import APIRoutes from './routes/api/index'
 import {
@@ -5,17 +6,27 @@ import {
   finalResponseHandler,
   errorHandler
 } from './middlewares'
-
 const app = express()
 
 app.use(express.json()) // Parse JSON bodies
 
 app.use(responseHandler) // Attach response helper
 
+declare global {
+  // eslint-disable-next-line @typescript-eslint/no-namespace
+  namespace Express {
+    interface Request {
+      userId?: string
+      session?: any
+      user?: any
+    }
+  }
+}
+
 app.use('/api', APIRoutes) // API Routes
 
 // Or send JSON for API requests
-app.use((req, res, next) => {
+app.use((req, res) => {
   res.status(404).json({ message: 'Not Found' })
 })
 

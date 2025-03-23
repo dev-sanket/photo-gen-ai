@@ -1,11 +1,9 @@
 import { Request, Response, NextFunction } from 'express'
 import { clerkClient } from '@clerk/clerk-sdk-node'
 import { verifyToken } from '@clerk/backend'
-import { UserRepository } from '../repositories/user.repository'
 import { errorTypes } from '../utils'
 
 const { UnauthorizedError, BadRequestError } = errorTypes
-const userRepository = new UserRepository()
 // Middleware to verify the token
 export const verifyClerkJWTToken = async (
   req: Request,

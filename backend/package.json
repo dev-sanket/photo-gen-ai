@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npm run dist && node dist/index.js",
-    "start:dev": "npx nodemon --watch '*.ts' --exec 'ts-node' index.ts",
+    "start:dev": "npx nodemon index.ts",
     "build": "rimraf ./dist && tsc --outDir dist --project tsconfig.json",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
   },
