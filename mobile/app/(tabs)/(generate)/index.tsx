@@ -69,8 +69,8 @@ const GenerateImagesScreen = () => {
               placeholderTextColor="grey"
               numberOfLines={50}
               multiline={true}
-              activeUnderlineColor={theme.colors.background}
-              underlineColor={theme.colors.background}
+              // activeUnderlineColor={theme.colors.background}
+              // underlineColor={theme.colors.background}
               activeOutlineColor={theme.colors.primary}
               value={prompt}
               onChangeText={(text: string) => setPrompt(text)}
@@ -132,7 +132,10 @@ const GenerateImagesScreen = () => {
             <View style={{}}>
               <Text
                 variant="labelLarge"
-                style={{ marginBottom: 8, color: theme.colors.textLight }}
+                style={{
+                  marginBottom: theme.spacing.sm,
+                  color: theme.colors.textLight
+                }}
               >
                 Image Style
               </Text>
@@ -151,7 +154,10 @@ const GenerateImagesScreen = () => {
             >
               <Text
                 variant="labelLarge"
-                style={{ marginBottom: 8, color: theme.colors.textLight }}
+                style={{
+                  marginBottom: theme.spacing.sm,
+                  color: theme.colors.textLight
+                }}
               >
                 Number of Images (5 coins each)
               </Text>
@@ -159,15 +165,11 @@ const GenerateImagesScreen = () => {
                 <IconButton
                   icon="minus"
                   size={18}
-                  onPress={() => setImageCount(Math.max(1, imageCount - 1))}
-                  style={[
-                    styles.counterButton,
-                    styles.leftPos,
-                    {
-                      backgroundColor: theme.colors.backdrop,
-                      borderColor: theme.colors.backdrop
-                    }
-                  ]}
+                  onPress={() => {
+                    console.log('minus')
+                    setImageCount(Math.max(1, imageCount - 1))
+                  }}
+                  style={[styles.counterButton, styles.leftPos]}
                 />
                 <Text
                   variant="headlineMedium"
@@ -186,27 +188,34 @@ const GenerateImagesScreen = () => {
                   icon="plus"
                   size={18}
                   onPress={() => setImageCount(imageCount + 1)}
-                  style={[styles.counterButton, styles.rightPos]}
+                  style={[
+                    styles.counterButton,
+                    styles.rightPos,
+                    {
+                      borderColor: theme.colors.primary,
+                      backgroundColor: theme.colors.primary
+                    }
+                  ]}
                 />
               </View>
             </View>
           </CustomCard>
+          <View
+            style={{
+              // padding: theme.spacing.md,
+              bottom: -theme.spacing.xxl
+            }}
+          >
+            <CustomButton
+              text="Generate Image (20 coins)"
+              onPress={() => router.push('/(tabs)/(generate)/preview-image')}
+              loading={false}
+              disable={false}
+            />
+          </View>
         </View>
-        <View style={{ height: 70 }}></View>
+        <View style={{ height: 170 }}></View>
       </ScrollView>
-      <View
-        style={{
-          padding: theme.spacing.md,
-          bottom: theme.spacing.sm
-        }}
-      >
-        <CustomButton
-          text="Generate Image (20 coins)"
-          onPress={() => router.push('/(tabs)/(generate)/preview-image')}
-          loading={false}
-          disable={false}
-        />
-      </View>
     </View>
   )
 }
@@ -252,9 +261,9 @@ const getStyles = (theme: AppTheme) =>
       padding: theme.spacing.xs,
       position: 'absolute',
       borderWidth: 1,
-      borderColor: theme.colors.primary,
       borderRadius: 20,
-      backgroundColor: theme.colors.primary
+      backgroundColor: theme.colors.backdrop,
+      borderColor: theme.colors.backdrop
     },
     rightPos: {
       right: 5,

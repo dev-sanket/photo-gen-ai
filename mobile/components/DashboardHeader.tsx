@@ -71,27 +71,15 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
           </ThemedText>
         </IconButton>
 
-        {userImageLoading ? (
+        {/* {userImageLoading && (
           <ActivityIndicator animating={true} size={'small'} />
-        ) : (
-          <TouchableOpacity
-            style={{ width: 32, height: 32 }}
-            onPress={() => router.push(`/(tabs)/(profile)/${user.id}`)}
-          >
-            <Avatar.Image
-              source={{ uri: user.imageUrl }}
-              size={32}
-              onLoadStart={() => {
-                // console.log('Image loading start')
-                setUserImageLoading(true)
-              }}
-              onLoad={() => {
-                // console.log('Image loading end')
-                setUserImageLoading(false)
-              }}
-            />
-          </TouchableOpacity>
-        )}
+        )} */}
+        <TouchableOpacity
+          style={{ width: 32, height: 32 }}
+          onPress={() => router.push(`/(tabs)/(profile)/${user.id}`)}
+        >
+          <Avatar.Image source={{ uri: user.imageUrl }} size={32} />
+        </TouchableOpacity>
       </View>
     </Animated.View>
   )

@@ -27,12 +27,12 @@ const CustomButton: React.FC<CustomButtonProps> = ({
   return (
     <Button
       mode="contained"
-      rippleColor="#f7f7f9"
+      rippleColor="#d1d1d175"
+      buttonColor={theme.colors.primary}
       style={[
         {
           width: '100%',
-          backgroundColor: theme.colors.primary,
-          borderRadius: theme.roundness,
+          borderRadius: theme.roundness * 2,
           // iOS Shadow
           shadowColor: '#000',
           shadowOffset: { width: 0, height: 2 },

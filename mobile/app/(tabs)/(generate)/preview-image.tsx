@@ -13,6 +13,7 @@ import { useRouter } from 'expo-router'
 
 import { AppTheme, useAppTheme } from '@/theme/theme'
 import { ThemedText } from '@/components/ThemedText'
+import PageHeader from '@/components/PageHeader'
 
 const images = [
   'https://dummyimage.com/640x3:4&text=AI+Apps+rocks',
@@ -38,7 +39,7 @@ const ImagePreviewScreen = () => {
     <View style={styles.container}>
       <ScrollView style={{}} showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
-          <View style={{}}>
+          {/* <View style={{}}>
             <ThemedText
               type="default"
               style={{
@@ -48,7 +49,8 @@ const ImagePreviewScreen = () => {
             >
               Preview
             </ThemedText>
-          </View>
+          </View> */}
+          <PageHeader />
           <FlatList
             data={images}
             keyExtractor={(_, index) => index.toString()}
@@ -116,8 +118,8 @@ const getStyles = (theme: AppTheme) =>
     },
     body: {
       flex: 1,
-      padding: theme.spacing.md,
-      marginTop: theme.spacing.xxl
+      padding: theme.spacing.md
+      // marginTop: theme.spacing.xxl
     },
 
     imageRow: {

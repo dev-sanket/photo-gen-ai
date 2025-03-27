@@ -1,5 +1,6 @@
 // This file is a fallback for using MaterialIcons on Android and web.
 
+import { Feather, Ionicons, MaterialCommunityIcons } from '@expo/vector-icons'
 import MaterialIcons from '@expo/vector-icons/MaterialIcons'
 import { SymbolWeight } from 'expo-symbols'
 import React from 'react'
@@ -18,7 +19,9 @@ const MAPPING = {
   gift: 'card-giftcard',
   'photo.fill': 'image',
   'pencil.and.ellipsis.rectangle': 'edit-document',
-  minus: 'remove'
+  minus: 'remove',
+  'arrow.backward': 'arrow-back',
+  'arrow.forward': 'arrow-forward'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
@@ -35,22 +38,77 @@ export type IconSymbolName = keyof typeof MAPPING
  */
 export function IconSymbol({
   name,
+  type = 'material',
   size = 24,
   color,
   style
 }: {
-  name: IconSymbolName
+  name:
+    | IconSymbolName
+    | React.ComponentProps<typeof MaterialIcons>['name']
+    | React.ComponentProps<typeof Feather>['name']
+    | React.ComponentProps<typeof Ionicons>['name']
+    | React.ComponentProps<typeof MaterialCommunityIcons>['name']
+  type: 'feather' | 'material' | 'ionicons' | 'material-community-icon'
+  // The icon library to use
   size?: number
   color: string | OpaqueColorValue
   style?: StyleProp<TextStyle>
   weight?: SymbolWeight
 }) {
-  return (
-    <MaterialIcons
-      color={color}
-      size={size}
-      name={MAPPING[name]}
-      style={style}
-    />
-  )
+  const renderIcon = () => {
+    switch (type) {
+      case 'material':
+        return (
+          <MaterialIcons
+            color={color}
+            size={size}
+            name={MAPPING[name as IconSymbolName]}
+            style={style}
+          />
+        )
+      case 'feather':
+        return (
+          <Feather
+            color={color}
+            size={size}
+            name={name as React.ComponentProps<typeof Feather>['name']}
+            style={style}
+          />
+        )
+      case 'ionicons':
+        return (
+          <Ionicons
+            color={color}
+            size={size}
+            name={name as React.ComponentProps<typeof Ionicons>['name']}
+            style={style}
+          />
+        )
+      case 'material-community-icon':
+        return (
+          <MaterialCommunityIcons
+            color={color}
+            size={size}
+            name={
+              name as React.ComponentProps<
+                typeof MaterialCommunityIcons
+              >['name']
+            }
+            style={style}
+          />
+        )
+      default:
+        return (
+          <MaterialIcons
+            color={color}
+            size={size}
+            name={MAPPING[name as IconSymbolName]}
+            style={style}
+          />
+        )
+    }
+  }
+
+  return renderIcon()
 }

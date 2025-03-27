@@ -145,7 +145,10 @@ export default function DashboardHomeScreen() {
               >
                 Recent Images
               </ThemedText>
-              <Link href="/sign-up" style={{ marginLeft: 5, color: '#6366f1' }}>
+              <Link
+                href="/all-images"
+                style={{ marginLeft: 5, color: '#6366f1' }}
+              >
                 <Text>{'View All >>'}</Text>
               </Link>
             </View>
