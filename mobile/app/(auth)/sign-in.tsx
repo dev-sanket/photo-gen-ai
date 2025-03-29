@@ -50,6 +50,7 @@ export default function Page() {
         } else {
           // If the status isn't complete, check why. User might need to
           // complete further steps.
+          setLoading(false)
           console.error(JSON.stringify(signInAttempt, null, 2))
         }
       } catch (err) {

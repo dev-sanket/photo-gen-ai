@@ -14,12 +14,7 @@ import {
 } from '@expo/vector-icons'
 
 interface IconButtonProps {
-  icon:
-    | IconSymbolName
-    | React.ComponentProps<typeof Feather>['name']
-    | React.ComponentProps<typeof Ionicons>['name']
-    | React.ComponentProps<typeof MaterialCommunityIcons>['name']
-  iconFamily?: 'material' | 'feather' | 'ionicons' | 'material-community-icon'
+  icon: IconSymbolName
   size?: number
   color?: string
   text?: string
@@ -31,7 +26,6 @@ interface IconButtonProps {
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
-  iconFamily = 'material',
   size = 24,
   color = '#fff',
   style = {},
@@ -54,11 +48,11 @@ const IconButton: React.FC<IconButtonProps> = ({
       onPress={onPress}
     >
       {iconPosition === 'left' && (
-        <IconSymbol type={iconFamily} name={icon} size={size} color={color} />
+        <IconSymbol name={icon} size={size} color={color} />
       )}
       {children}
       {iconPosition === 'right' && (
-        <IconSymbol type={iconFamily} name={icon} size={size} color={color} />
+        <IconSymbol name={icon} size={size} color={color} />
       )}
     </TouchableOpacity>
   )

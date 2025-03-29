@@ -1,5 +1,12 @@
-import React, { Component } from 'react'
-import { Dimensions, Image, ScrollView, StyleSheet, View } from 'react-native'
+import React, { Component, useEffect, useState } from 'react'
+import {
+  Dimensions,
+  Image,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View
+} from 'react-native'
 import { AppTheme, useAppTheme } from '@/theme/theme'
 import { useUser } from '@clerk/clerk-expo'
 import { ThemedText } from '@/components/ThemedText'
@@ -15,11 +22,19 @@ const AllImagesListScreen = () => {
   const { user } = useUser()
 
   const styles = getStyles(theme)
+  const [images, setImages] = useState<string[]>()
+
+  useEffect(() => {
+    const imagesArry = new Array(3).fill(
+      'https://t3.ftcdn.net/jpg/02/22/85/16/360_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg'
+    )
+    setImages(imagesArry)
+  }, [])
 
   return (
     <View style={styles.container}>
       <ScrollView>
-        <PageHeader />
+        <PageHeader pageTitle="Photos" />
         <View style={styles.modelsSection}>
           {/* <View style={styles.welcomeText}>
             <ThemedText type="default" style={{ fontSize: 18 }}>
@@ -77,28 +92,37 @@ const AllImagesListScreen = () => {
                   justifyContent: 'flex-start'
                 }}
               >
-                {[1, 2, 3].map((item, index) => (
-                  <View
+                {images?.map((item: string, index: number) => (
+                  <TouchableOpacity
                     key={index}
-                    style={{
-                      height: 150,
-                      width: width / 2 - 30,
-                      marginBottom: theme.spacing.md,
-                      marginLeft: theme.spacing.sm + 2
-                    }}
+                    onPress={() =>
+                      router.push({
+                        pathname: '/(dashboard)/modal',
+                        params: { imageURI: item }
+                      })
+                    }
                   >
-                    <Image
-                      source={{
-                        uri: 'https://t3.ftcdn.net/jpg/02/22/85/16/360_F_222851624_jfoMGbJxwRi5AWGdPgXKSABMnzCQo9RN.jpg'
-                      }}
+                    <View
                       style={{
-                        width: '100%',
-                        height: '100%',
-                        borderRadius: 10,
-                        overflow: 'hidden'
+                        height: 150,
+                        width: width / 2 - 30,
+                        marginBottom: theme.spacing.md,
+                        marginLeft: theme.spacing.sm + 2
                       }}
-                    />
-                  </View>
+                    >
+                      <Image
+                        source={{
+                          uri: item
+                        }}
+                        style={{
+                          width: '100%',
+                          height: '100%',
+                          borderRadius: 10,
+                          overflow: 'hidden'
+                        }}
+                      />
+                    </View>
+                  </TouchableOpacity>
                 ))}
               </View>
             </View>

@@ -1,5 +1,11 @@
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  Platform
+} from 'react-native'
 import IconButton from './IconButton'
 import { AppTheme, useAppTheme } from '@/theme/theme'
 import { useRouter } from 'expo-router'
@@ -7,24 +13,36 @@ import { useUser } from '@clerk/clerk-expo'
 import { ThemedText } from './ThemedText'
 import { Avatar } from 'react-native-paper'
 
-const PageHeader = () => {
+interface IPageHeader {
+  pageTitle: string
+  left?: boolean
+  right?: boolean
+}
+
+const PageHeader: React.FC<IPageHeader> = ({
+  pageTitle,
+  left = true,
+  right = true
+}) => {
   const theme = useAppTheme()
   const router = useRouter()
 
   const { user } = useUser()
+  const isIOS = Platform.OS === 'ios'
 
   const styles = getStyles(theme)
   return (
     <View style={styles.headerContainer}>
       <View style={styles.leftPos}>
-        <IconButton
-          iconFamily="feather"
-          icon="chevron.left"
-          color={theme.colors.textLight}
-          size={18}
-          style={styles.backButton}
-          onPress={() => router.back()}
-        />
+        {left && (
+          <IconButton
+            icon="chevron.left"
+            color={theme.colors.textLight}
+            size={18}
+            style={styles.backButton}
+            onPress={() => router.back()}
+          />
+        )}
       </View>
 
       <View style={styles.centerPos}>
@@ -36,16 +54,18 @@ const PageHeader = () => {
             color: theme.colors.text
           }}
         >
-          Photos
+          {pageTitle}
         </ThemedText>
       </View>
       <View style={styles.rightPos}>
-        <TouchableOpacity
-          style={{ width: 32, height: 32 }}
-          onPress={() => router.push(`/(tabs)/(profile)/${user?.id}`)}
-        >
-          <Avatar.Image source={{ uri: user?.imageUrl }} size={32} />
-        </TouchableOpacity>
+        {right && (
+          <TouchableOpacity
+            style={{ width: 32, height: 32 }}
+            onPress={() => router.push(`/(tabs)/(profile)/${user?.id}`)}
+          >
+            <Avatar.Image source={{ uri: user?.imageUrl }} size={32} />
+          </TouchableOpacity>
+        )}
       </View>
     </View>
   )
@@ -54,10 +74,15 @@ const PageHeader = () => {
 const getStyles = (theme: AppTheme) =>
   StyleSheet.create({
     headerContainer: {
-      paddingTop: theme.spacing.xxl * 1.5,
+      paddingTop: Platform.select({
+        ios: theme.spacing.xxl * 1.5,
+        android: theme.spacing.xxl
+      }),
       paddingHorizontal: theme.spacing.sm,
       flexDirection: 'row',
-      marginBottom: theme.spacing.md
+      paddingBottom: theme.spacing.md
+      // borderBottomColor: '#000',
+      // borderBottomWidth: 1
     },
     backButton: {
       justifyContent: 'center',
@@ -71,13 +96,19 @@ const getStyles = (theme: AppTheme) =>
     leftPos: {
       flex: 0.3,
       justifyContent: 'center',
-      alignItems: 'flex-start'
+      alignItems: 'flex-start',
+      marginLeft: theme.spacing.xs
     },
     centerPos: {
       flex: 0.6,
       alignItems: 'center',
       justifyContent: 'center'
     },
-    rightPos: { flex: 0.3, alignItems: 'flex-end' }
+    rightPos: {
+      flex: 0.3,
+      alignItems: 'flex-end',
+      justifyContent: 'center',
+      marginRight: theme.spacing.xs
+    }
   })
 export default PageHeader

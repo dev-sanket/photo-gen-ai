@@ -16,6 +16,14 @@ const DashboardRootLayout = () => {
           headerShown: false
         }}
       />
+      <Stack.Screen
+        name="modal"
+        options={{
+          animation: 'fade',
+          presentation: 'fullScreenModal',
+          headerShown: false
+        }}
+      />
     </Stack>
   )
 }

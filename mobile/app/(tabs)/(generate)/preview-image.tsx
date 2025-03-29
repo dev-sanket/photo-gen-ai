@@ -37,6 +37,7 @@ const ImagePreviewScreen = () => {
 
   return (
     <View style={styles.container}>
+      <PageHeader pageTitle="New Images" />
       <ScrollView style={{}} showsVerticalScrollIndicator={false}>
         <View style={styles.body}>
           {/* <View style={{}}>
@@ -50,7 +51,7 @@ const ImagePreviewScreen = () => {
               Preview
             </ThemedText>
           </View> */}
-          <PageHeader />
+
           <FlatList
             data={images}
             keyExtractor={(_, index) => index.toString()}

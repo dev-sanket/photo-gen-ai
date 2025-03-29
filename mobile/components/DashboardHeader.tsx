@@ -16,12 +16,12 @@ import { useRouter } from 'expo-router'
 import IconButton from './IconButton'
 import { Avatar } from 'react-native-paper'
 
-interface DashboardHeaderProps {
+interface IDashboardHeaderProps {
   user: UserResource
   headerText?: string
 }
 
-const DashboardHeader: React.FC<DashboardHeaderProps> = ({
+const DashboardHeader: React.FC<IDashboardHeaderProps> = ({
   user,
   headerText
 }) => {
@@ -39,15 +39,7 @@ const DashboardHeader: React.FC<DashboardHeaderProps> = ({
   })
 
   return (
-    <Animated.View
-      style={[
-        styles.container,
-        {
-          paddingTop:
-            Platform.OS === 'ios' ? theme.spacing.xxxl : theme.spacing.xxl
-        }
-      ]}
-    >
+    <Animated.View style={styles.container}>
       <ThemedText type="subtitle" style={{ color: theme.colors.text }}>
         {headerText || 'PhotoGen.AI'}
       </ThemedText>
@@ -89,7 +81,10 @@ const getStyles = (theme: AppTheme) =>
   StyleSheet.create({
     container: {
       width: '100%',
-      // paddingTop: theme.spacing.xxl,
+      paddingTop: Platform.select({
+        ios: theme.spacing.xxxl,
+        android: theme.spacing.xxl
+      }),
       padding: theme.spacing.md,
       backgroundColor: theme.colors.background,
       flexDirection: 'row',

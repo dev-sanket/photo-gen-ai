@@ -134,7 +134,7 @@ const VerifyEmailScreen = () => {
       <View
         style={{
           width: '100%',
-          bottom: theme.spacing.xl
+          bottom: -theme.spacing.xl
         }}
       >
         <CustomButton

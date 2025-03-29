@@ -21,7 +21,8 @@ const MAPPING = {
   'pencil.and.ellipsis.rectangle': 'edit-document',
   minus: 'remove',
   'arrow.backward': 'arrow-back',
-  'arrow.forward': 'arrow-forward'
+  'arrow.forward': 'arrow-forward',
+  'chevron.left': 'chevron-left'
 } as Partial<
   Record<
     import('expo-symbols').SymbolViewProps['name'],
@@ -38,77 +39,24 @@ export type IconSymbolName = keyof typeof MAPPING
  */
 export function IconSymbol({
   name,
-  type = 'material',
   size = 24,
   color,
   style
 }: {
-  name:
-    | IconSymbolName
-    | React.ComponentProps<typeof MaterialIcons>['name']
-    | React.ComponentProps<typeof Feather>['name']
-    | React.ComponentProps<typeof Ionicons>['name']
-    | React.ComponentProps<typeof MaterialCommunityIcons>['name']
-  type: 'feather' | 'material' | 'ionicons' | 'material-community-icon'
+  name: IconSymbolName
+
   // The icon library to use
   size?: number
   color: string | OpaqueColorValue
   style?: StyleProp<TextStyle>
   weight?: SymbolWeight
 }) {
-  const renderIcon = () => {
-    switch (type) {
-      case 'material':
-        return (
-          <MaterialIcons
-            color={color}
-            size={size}
-            name={MAPPING[name as IconSymbolName]}
-            style={style}
-          />
-        )
-      case 'feather':
-        return (
-          <Feather
-            color={color}
-            size={size}
-            name={name as React.ComponentProps<typeof Feather>['name']}
-            style={style}
-          />
-        )
-      case 'ionicons':
-        return (
-          <Ionicons
-            color={color}
-            size={size}
-            name={name as React.ComponentProps<typeof Ionicons>['name']}
-            style={style}
-          />
-        )
-      case 'material-community-icon':
-        return (
-          <MaterialCommunityIcons
-            color={color}
-            size={size}
-            name={
-              name as React.ComponentProps<
-                typeof MaterialCommunityIcons
-              >['name']
-            }
-            style={style}
-          />
-        )
-      default:
-        return (
-          <MaterialIcons
-            color={color}
-            size={size}
-            name={MAPPING[name as IconSymbolName]}
-            style={style}
-          />
-        )
-    }
-  }
-
-  return renderIcon()
+  return (
+    <MaterialIcons
+      color={color}
+      size={size}
+      name={MAPPING[name as IconSymbolName]}
+      style={style}
+    />
+  )
 }
