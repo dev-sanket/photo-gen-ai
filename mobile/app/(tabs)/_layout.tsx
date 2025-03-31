@@ -1,4 +1,4 @@
-import { Tabs } from 'expo-router'
+import { Tabs, useNavigation, usePathname, useRouter } from 'expo-router'
 import React from 'react'
 import { Platform } from 'react-native'
 
@@ -19,21 +19,31 @@ export default function TabLayout() {
         headerShown: false,
         tabBarButton: HapticTab,
         tabBarBackground: TabBarBackground,
-        tabBarStyle: Platform.select({
-          ios: {
-            // Use a transparent background on iOS to show the blur effect
-            position: 'absolute'
-          },
-          default: {}
-        })
+        tabBarStyle: {
+          display: usePathname() === '/update-profile' ? 'none' : 'flex',
+          position: Platform.select({
+            ios: 'absolute'
+          })
+        }
+        // tabBarStyle: Platform.select({
+        //   ios: {
+        //     // Use a transparent background on iOS to show the blur effect
+        //     position: 'absolute'
+        //   },
+        //   default: {}
+        // })
       }}
     >
       <Tabs.Screen
         name="(dashboard)"
         options={{
           title: 'Home',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="house.fill" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={28}
+              name={focused ? 'house.fill' : 'house'}
+              color={color}
+            />
           )
         }}
       />
@@ -41,8 +51,25 @@ export default function TabLayout() {
         name="(generate)"
         options={{
           title: 'Generate',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="plus" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={28}
+              name={focused ? 'wand.and.stars.inverse' : 'wand.and.stars'}
+              color={color}
+            />
+          )
+        }}
+      />
+      <Tabs.Screen
+        name="(pack)"
+        options={{
+          title: 'Packs',
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={28}
+              name={focused ? 'square.stack.fill' : 'square.stack'}
+              color={color}
+            />
           )
         }}
       />
@@ -50,8 +77,12 @@ export default function TabLayout() {
         name="(profile)"
         options={{
           title: 'User',
-          tabBarIcon: ({ color }) => (
-            <IconSymbol size={28} name="person.circle.fill" color={color} />
+          tabBarIcon: ({ color, focused }) => (
+            <IconSymbol
+              size={28}
+              name={focused ? 'person.circle.fill' : 'person.circle'}
+              color={color}
+            />
           )
         }}
       />

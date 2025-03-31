@@ -2,7 +2,13 @@ import React from 'react'
 import PageHeader from '@/components/PageHeader'
 import { AppTheme, useAppTheme } from '@/theme/theme'
 import { useAuth, useUser } from '@clerk/clerk-expo'
-import { View, StyleSheet, ScrollView, Image } from 'react-native'
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  Image,
+  TouchableOpacity
+} from 'react-native'
 import { List, Switch, ProgressBar, Avatar } from 'react-native-paper'
 import { ThemedText } from '@/components/ThemedText'
 import { useRouter } from 'expo-router'
@@ -68,16 +74,18 @@ const SettingsScreen = () => {
               <Avatar.Image source={{ uri: user?.imageUrl }} size={56} />
             )}
             right={() => (
-              <ThemedText
-                type="default"
-                style={{
-                  color: theme.colors.primary,
-                  fontSize: theme.fonts.titleMedium.fontSize,
-                  fontWeight: theme.fonts.titleMedium.fontWeight
-                }}
-              >
-                Edit
-              </ThemedText>
+              <TouchableOpacity onPress={() => router.push('/update-profile')}>
+                <ThemedText
+                  type="default"
+                  style={{
+                    color: theme.colors.primary,
+                    fontSize: theme.fonts.titleMedium.fontSize,
+                    fontWeight: theme.fonts.titleMedium.fontWeight
+                  }}
+                >
+                  Edit
+                </ThemedText>
+              </TouchableOpacity>
             )}
             style={{
               padding: theme.spacing.md,

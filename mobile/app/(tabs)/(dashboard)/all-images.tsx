@@ -97,7 +97,7 @@ const AllImagesListScreen = () => {
                     key={index}
                     onPress={() =>
                       router.push({
-                        pathname: '/(dashboard)/modal',
+                        pathname: '/(tabs)/(dashboard)/modal',
                         params: { imageURI: item }
                       })
                     }

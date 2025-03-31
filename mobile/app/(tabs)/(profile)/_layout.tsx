@@ -9,13 +9,20 @@ export default function Layout() {
     return <Redirect href="/(auth)/sign-in" />
   }
   return (
-    <Stack>
+    <Stack initialRouteName="[user]">
       <Stack.Screen name="[user]" options={{ headerShown: false }} />
-      <Stack.Screen name="[update-profile]" options={{ headerShown: false }} />
       <Stack.Screen name="settings" options={{ headerShown: false }} />
       <Stack.Screen name="privacy" options={{ headerShown: true }} />
       <Stack.Screen name="support" options={{ headerShown: true }} />
       <Stack.Screen name="faqs" options={{ headerShown: true }} />
+      <Stack.Screen
+        name="update-profile"
+        options={{
+          animation: 'fade',
+          presentation: 'fullScreenModal',
+          headerShown: false
+        }}
+      />
     </Stack>
   )
 }

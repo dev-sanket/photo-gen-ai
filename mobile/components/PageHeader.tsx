@@ -38,7 +38,10 @@ const PageHeader: React.FC<IPageHeader> = ({
           <IconButton
             icon="chevron.left"
             color={theme.colors.textLight}
-            size={18}
+            size={Platform.select({
+              ios: 18,
+              android: 22
+            })}
             style={styles.backButton}
             onPress={() => router.back()}
           />
@@ -63,7 +66,7 @@ const PageHeader: React.FC<IPageHeader> = ({
             style={{ width: 32, height: 32 }}
             onPress={() => router.push(`/(tabs)/(profile)/${user?.id}`)}
           >
-            <Avatar.Image source={{ uri: user?.imageUrl }} size={32} />
+            <Avatar.Image source={{ uri: user?.imageUrl }} size={36} />
           </TouchableOpacity>
         )}
       </View>
@@ -90,7 +93,7 @@ const getStyles = (theme: AppTheme) =>
       width: 30,
       height: 30,
       borderWidth: 1,
-      borderRadius: 6,
+      borderRadius: 50,
       borderColor: theme.colors.outline
     },
     leftPos: {
