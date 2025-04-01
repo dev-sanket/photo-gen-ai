@@ -1,9 +1,8 @@
 import { Entity, Column, OneToMany } from 'typeorm'
 import { BaseModel } from './base.entity'
-import { OutputImages } from './output-images.entity'
+import { OutputImages } from './output-image.entity'
 import { Model } from './model.entity'
 import { IUser } from '../types'
-import { Subscription } from './subscription.entity'
 
 @Entity({ name: 'users' })
 export class User extends BaseModel implements IUser {
@@ -27,7 +26,4 @@ export class User extends BaseModel implements IUser {
 
   @OneToMany(() => Model, (Model) => Model.user)
   models!: Model[]
-
-  @OneToMany(() => Subscription, (subscription) => subscription.user)
-  subscriptions!: Subscription[]
 }

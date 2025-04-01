@@ -2,7 +2,7 @@ import { OutputGeneratedStatusEnum } from '../enums'
 
 export interface IOutPutImages {
   id: number
-  modelId: string
+  modelId: number
   outputUrl: string
   prompt: string
   falAiRequestId?: string

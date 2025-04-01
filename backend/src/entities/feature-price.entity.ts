@@ -2,7 +2,7 @@ import { Column, Entity } from 'typeorm'
 import { BaseModel } from './base.entity'
 import { IFeaturePrice } from '../types/index'
 
-@Entity({ name: 'feature-price' })
+@Entity({ name: 'feature-prices' })
 export class FeaturePricing extends BaseModel implements IFeaturePrice {
   @Column({ type: 'varchar', unique: true, nullable: false })
   featureName!: string // e.g., "Basic_Image", "HD_Image", "AI_Video"
@@ -14,7 +14,7 @@ export class FeaturePricing extends BaseModel implements IFeaturePrice {
   coinCost: number = 0
 
   @Column({ type: 'varchar', nullable: true })
-  imageQuality!: string // e.g., "512x512", "1024x1024", "2048x2048"
+  imageQuality?: string // e.g., "512x512", "1024x1024", "2048x2048"
 
   @Column({ nullable: true })
   videoGenerationCost!: number // Cost in coins for AI video generation

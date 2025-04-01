@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import express from 'express'
-import APIRoutes from './routes/api/index'
+import APIRoutes from './routes/api'
+import WebhookRoutes from './routes/webhook'
 import {
   responseHandler,
   finalResponseHandler,
@@ -24,6 +25,7 @@ declare global {
 }
 
 app.use('/api', APIRoutes) // API Routes
+app.use('/webhook', WebhookRoutes) // Webhook Routes
 
 // Or send JSON for API requests
 app.use((req, res) => {

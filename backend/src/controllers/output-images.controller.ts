@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express'
-import { OutputImagesService } from '../services/output-images.service'
+import { OutputImagesService } from '../services'
 import { ApiResponse, IOutPutImages } from '../types'
 
 export class OutputImageController {

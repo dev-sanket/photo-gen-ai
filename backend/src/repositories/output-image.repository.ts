@@ -1,5 +1,5 @@
 import { DataSource } from 'typeorm'
-import { OutputImages } from '../entities/output-images.entity'
+import { OutputImages } from '../entities/output-image.entity'
 import { BaseRepository } from './base.repository'
 import { IOutPutImages } from '../types'
 
@@ -10,7 +10,11 @@ export class OutputImagesRepository extends BaseRepository<OutputImages> {
     super(dataSource, OutputImages)
     this.dataSource = dataSource
   }
-  bulkCreate(outputImages: IOutPutImages[]): Promise<IOutPutImages[]> {
-    return this.dataSource.manager.save(outputImages)
+  async bulkCreate(outputImages: IOutPutImages[]): Promise<IOutPutImages[]> {
+    const resp = await this.dataSource.manager.insert(
+      OutputImages,
+      outputImages
+    )
+    return resp.raw
   }
 }

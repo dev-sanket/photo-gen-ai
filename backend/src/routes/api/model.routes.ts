@@ -1,6 +1,6 @@
 import express from 'express'
 import { asyncHandler, bindControllerMethods } from '../../utils/index'
-import { ModelController } from '../../controllers/model.controller'
+import { ModelController } from '../../controllers'
 import { verifyClerkJWTToken } from '../../middlewares'
 
 const router = express.Router()

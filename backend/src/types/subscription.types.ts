@@ -6,5 +6,4 @@ export interface ISubscription {
   coinAllowance: number
   bonusCoins: number
   isActive: boolean
-  userId: number
 }

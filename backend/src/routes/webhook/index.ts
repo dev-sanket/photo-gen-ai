@@ -3,6 +3,6 @@ import ClerkWebHook from './clerk-webhook.router'
 
 const router = express.Router()
 
-router.use('/webhook', ClerkWebHook)
+router.use('/clerk', ClerkWebHook)
 
 export default router

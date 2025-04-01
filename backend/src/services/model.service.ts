@@ -1,5 +1,5 @@
 import { AppDataSource } from '../config/database'
-import { ModelRepository } from '../repositories/mode.repository'
+import { ModelRepository } from '../repositories'
 import { AWSService } from './aws.service'
 import { UserRepository } from '../repositories/user.repository'
 import { errorTypes } from '../utils'

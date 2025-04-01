@@ -1,9 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm'
+import { Column, Entity } from 'typeorm'
 import { BaseModel } from './base.entity'
-import { User } from './user.entity'
 import { ISubscription } from '../types'
 
-@Entity({ name: 'subscription' })
+@Entity({ name: 'subscriptions' })
 export class Subscription extends BaseModel implements ISubscription {
   @Column({ type: 'varchar' })
   planName: string = '' // Basic, Pro, Premium
@@ -25,11 +24,4 @@ export class Subscription extends BaseModel implements ISubscription {
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean = true
-
-  @ManyToOne(() => User, (user) => user.outputImages)
-  @JoinColumn({ name: 'userId' })
-  user: User | undefined
-
-  @Column({ name: 'user_id' })
-  userId: number = 0
 }

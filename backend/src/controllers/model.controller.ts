@@ -1,4 +1,4 @@
-import { ModelService } from '../services/model.service'
+import { ModelService } from '../services'
 import { Request } from 'express'
 import { ApiResponse, IModel } from '../types'
 

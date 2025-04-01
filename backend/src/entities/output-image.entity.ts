@@ -3,13 +3,10 @@ import { BaseModel } from './base.entity'
 import { User } from './user.entity'
 import { OutputGeneratedStatusEnum } from '../enums'
 import { IOutPutImages } from '../types'
+import { Model } from './model.entity'
 
 @Entity({ name: 'output_images' })
 export class OutputImages extends BaseModel implements IOutPutImages {
-  @Column({
-    type: 'varchar'
-  })
-  modelId: string = ''
   @Column({
     type: 'varchar'
   })
@@ -24,8 +21,17 @@ export class OutputImages extends BaseModel implements IOutPutImages {
   })
   status: OutputGeneratedStatusEnum = OutputGeneratedStatusEnum.IN_PROGRESS
 
+  @Column({
+    name: 'model_id'
+  })
+  modelId!: number
+
+  @ManyToOne(() => Model, (model) => model.id)
+  @JoinColumn({ name: 'model_id' })
+  model: Model | undefined
+
   @ManyToOne(() => User, (user) => user.outputImages)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: User | undefined
 
   @Column({ name: 'user_id' })

@@ -7,7 +7,7 @@ import {
 } from '../enums'
 import { BaseModel } from './base.entity'
 import { User } from './user.entity'
-import { OutputImages } from './output-images.entity'
+import { OutputImages } from './output-image.entity'
 import { IModel } from '../types'
 
 @Entity({ name: 'models' })
@@ -83,7 +83,7 @@ export class Model extends BaseModel implements IModel {
   trainingStatus: ModelTrainingStatusEnum = ModelTrainingStatusEnum.IN_PROGRESS
 
   @ManyToOne(() => User, (user) => user.outputImages)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user: User | undefined
 
   @Column({ name: 'user_id' })
@@ -95,6 +95,6 @@ export class Model extends BaseModel implements IModel {
   @Column({ type: 'boolean', default: false })
   isFirstTime: boolean = true
 
-  @Column({ type: 'numeric' })
-  coinCost!: number
+  @Column({ type: 'numeric', default: 0, nullable: false })
+  coinCost: number = 0
 }

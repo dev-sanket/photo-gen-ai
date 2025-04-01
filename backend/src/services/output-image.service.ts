@@ -1,6 +1,5 @@
 import { AppDataSource } from '../config/database'
-import { OutputImagesRepository } from '../repositories/output-images.repository'
-import { UserRepository } from '../repositories/user.repository'
+import { OutputImagesRepository, UserRepository } from '../repositories'
 import { errorTypes } from '../utils'
 import { IOutPutImages } from '../types'
 

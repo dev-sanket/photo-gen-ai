@@ -2,7 +2,7 @@ import { Column, Entity } from 'typeorm'
 import { BaseModel } from './base.entity'
 import { IPayAsYouGo } from '../types'
 
-@Entity({ name: 'paug' })
+@Entity({ name: 'paugs' })
 export class PayAsYouGoPackage extends BaseModel implements IPayAsYouGo {
   @Column({ type: 'varchar' })
   packageName: string = ''

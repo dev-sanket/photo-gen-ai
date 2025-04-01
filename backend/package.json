@@ -10,7 +10,8 @@
     "lint": "eslint \"{src,libs,test}/**/*.ts\"",
     "typeorm": "typeorm-ts-node-commonjs",
     "migration:create": "npm run typeorm migration:create ./src/migrations/FirstMigrations",
-    "migration:generate": "npm run typeorm migration:generate ./src/migrations/FirstMigrations -- -d ./src/config/database.ts"
+    "migration:generate": "npm run typeorm migration:generate ./src/migrations/FirstMigrations -- -d ./src/config/database.ts",
+    "migration:run": "npm run typeorm migration:run -- -d ./src/config/database.ts"
   },
   "keywords": [],
   "author": "",

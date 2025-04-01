@@ -1,4 +1,4 @@
-import { OutputImageController } from '../../controllers/output-images.controller'
+import { OutputImageController } from '../../controllers'
 import express, { Request, Response, NextFunction } from 'express'
 import { asyncHandler, bindControllerMethods } from '../../utils'
 import { verifyClerkJWTToken } from '../../middlewares'

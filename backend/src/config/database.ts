@@ -2,6 +2,7 @@ import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 import dotenv from 'dotenv'
 import { logger } from '../utils'
+import { seedPayAsYouGoPackages, seedFeaturePricing } from '../seeds'
 
 // Load environment variables
 dotenv.config()
@@ -14,7 +15,7 @@ export const AppDataSource = new DataSource({
   username: process.env.POSTGRES_USER, // Change to your DB username
   password: process.env.POSTGRES_PASSWORD, // Change to your DB password
   database: process.env.POSTGRES_DB, // Change to your database name
-  synchronize: true, // Auto-syncs DB schema (Disable in production)
+  synchronize: false, // Auto-syncs DB schema (Disable in production)
   logging: false,
   entities: ['src/entities/**/*.ts'], // Path to entity files
   migrations: ['src/migrations/**/*.ts'],
@@ -30,6 +31,12 @@ export const connectDatabase = async () => {
   try {
     await AppDataSource.initialize()
     logger.info('✅ Database connected successfully!')
+
+    // Call the seeding functions only if data is not present
+    //  await seedSubscriptions();
+    await seedPayAsYouGoPackages()
+    await seedFeaturePricing()
+    logger.info('🚀 All data seeded!')
   } catch (error) {
     logger.error('❌ Database connection failed:', error)
     process.exit(1)
