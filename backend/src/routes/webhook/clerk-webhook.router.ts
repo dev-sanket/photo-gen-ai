@@ -1,5 +1,5 @@
 import express from 'express'
-import { UserRepository } from 'repositories/user.repository'
+import { UserRepository } from '../../repositories/user.repository'
 import { Webhook } from 'svix'
 
 const router = express.Router()
@@ -66,7 +66,9 @@ router.post('/clerk', async (req, res) => {
         {
           const user = {
             clerkId: id || null,
-            name: `${evt.data.first_name ?? ''} ${evt.data.last_name ?? ''}`.trim(),
+            name: `${evt.data.first_name ?? ''} ${
+              evt.data.last_name ?? ''
+            }`.trim(),
             email: evt.data.email_addresses[0].email_address,
             profilePicture: evt.data.profile_image_url
           }

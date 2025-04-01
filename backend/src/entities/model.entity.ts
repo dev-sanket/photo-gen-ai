@@ -50,11 +50,13 @@ export class Model extends BaseModel implements IModel {
     nullable: true
   })
   triggerWord?: string
+
   @Column({
     type: 'varchar',
     nullable: true
   })
   tensorPath?: string
+
   @Column({
     type: 'varchar',
     nullable: true
@@ -89,4 +91,10 @@ export class Model extends BaseModel implements IModel {
 
   @OneToMany(() => OutputImages, (OutputImages) => OutputImages.id)
   outputImages!: OutputImages[]
+
+  @Column({ type: 'boolean', default: false })
+  isFirstTime: boolean = true
+
+  @Column({ type: 'numeric' })
+  coinCost!: number
 }

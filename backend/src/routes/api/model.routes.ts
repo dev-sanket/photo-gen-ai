@@ -18,6 +18,10 @@ router.get(
   verifyClerkJWTToken,
   asyncHandler(modelBindController.createPresignedUrl)
 )
-router.post('train', asyncHandler(modelBindController.trainModel))
+router.post(
+  '/train',
+  verifyClerkJWTToken,
+  asyncHandler(modelBindController.trainModel)
+)
 
 export default router

@@ -7,7 +7,10 @@
     "start": "npm run dist && node dist/index.js",
     "start:dev": "npx nodemon index.ts",
     "build": "rimraf ./dist && tsc --outDir dist --project tsconfig.json",
-    "lint": "eslint \"{src,apps,libs,test}/**/*.ts\""
+    "lint": "eslint \"{src,libs,test}/**/*.ts\"",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:create": "npm run typeorm migration:create ./src/migrations/FirstMigrations",
+    "migration:generate": "npm run typeorm migration:generate ./src/migrations/FirstMigrations -- -d ./src/config/database.ts"
   },
   "keywords": [],
   "author": "",

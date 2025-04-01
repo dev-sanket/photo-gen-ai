@@ -1,4 +1,4 @@
-import { OutputGeneratedStatusEnum } from '@common/enums'
+import { OutputGeneratedStatusEnum } from '../enums'
 
 export interface IOutPutImages {
   id: number

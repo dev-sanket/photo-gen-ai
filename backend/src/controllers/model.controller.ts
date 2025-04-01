@@ -9,8 +9,7 @@ export class ModelController {
     this.modelService = new ModelService()
   }
   public async getModelsByUser(req: Request): Promise<ApiResponse<IModel[]>> {
-    const userId = req.userId as string
-    const { skip = '0', limit = '10' } = req.params
+    const { skip = '0', limit = '10', userId } = req.params
     const data = await this.modelService.getModelsByUser(
       userId,
       Number(skip),

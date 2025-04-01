@@ -3,7 +3,7 @@ import {
   EyeColorEnum,
   GenderEnum,
   ModelTrainingStatusEnum
-} from '@common/enums'
+} from '../enums'
 import { IOutPutImages } from './output-images.types'
 
 export interface IModel {
@@ -22,4 +22,6 @@ export interface IModel {
   modelRequestId?: string
   zipFilePath?: string
   outputImages: IOutPutImages[]
+  isFirstTime: boolean
+  coinCost: number
 }

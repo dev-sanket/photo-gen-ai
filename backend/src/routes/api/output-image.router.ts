@@ -1,7 +1,7 @@
 import { OutputImageController } from '../../controllers/output-images.controller'
 import express, { Request, Response, NextFunction } from 'express'
 import { asyncHandler, bindControllerMethods } from '../../utils'
-import { verifyClerkJWTToken } from 'middlewares'
+import { verifyClerkJWTToken } from '../../middlewares'
 
 const router = express.Router()
 

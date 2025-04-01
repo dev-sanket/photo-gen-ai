@@ -4,4 +4,5 @@ export interface IUser {
   name: string
   email: string
   profilePicture?: string
+  trainedModelCount: number
 }
