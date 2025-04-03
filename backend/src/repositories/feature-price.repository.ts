@@ -15,11 +15,6 @@ export class FeaturePriceRepository extends BaseRepository<FeaturePricing> {
       FeaturePricing,
       outputImages
     )
-    // const createdRecords = await this.dataSource.manager.find(FeaturePricing, {
-    //   where: {
-    //     id: In(resp.identifiers.map(id => id.id))
-    //   }
-    // })
     return resp.raw
   }
 }

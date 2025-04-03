@@ -17,19 +17,18 @@ export class UserController {
     return { data: users, message: 'Success', status: 200 }
   }
 
-  getUserById = (req: Request, res: Response): void => {
-    const id = parseInt(req.params.id)
-    // const user = this.userService.getUserById(id);
-    // if (!user) {
-    //   res.status(404).json({ message: "User not found" });
-    // } else {
-    // }
-    res.json({ user: '' })
+  getUserById = async (
+    req: Request,
+    res: Response
+  ): Promise<ApiResponse<IUser>> => {
+    const id = req.params.id
+    const user = await this.userService.getUserByClerkId(id)
+    return { data: user, message: 'Success', status: 200 }
   }
 
-  createUser = (req: Request, res: Response): void => {
-    const newUser = req.body
-    // const user = this.userService.createUser(newUser);
-    res.status(201).json({ user: '' })
-  }
+  // createUser = (req: Request, res: Response): void => {
+  //   const newUser = req.body
+  //   // const user = this.userService.createUser(newUser);
+  //   res.status(201).json({ user: '' })
+  // }
 }
