@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm'
+import { FindOptionsWhere, Repository } from 'typeorm'
 import { AppDataSource } from '../config/database'
 import { User } from '../entities/user.entity'
 
@@ -42,5 +42,9 @@ export class UserRepository {
       return this.update(existingUser.id, user)
     }
     return this.create(user)
+  }
+
+  async count(conditions: FindOptionsWhere<User>): Promise<number> {
+    return await this.userRepo.count({ where: conditions })
   }
 }

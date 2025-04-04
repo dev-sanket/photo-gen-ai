@@ -1,7 +1,9 @@
 import { IUser } from '../types'
 import { UserRepository } from '../repositories/user.repository'
-import { ResourceNotFoundError } from '../utils/errors/error-types'
+import { errorTypes } from '../utils/index'
+import { MoreThanOrEqual } from 'typeorm'
 
+const { ResourceNotFoundError } = errorTypes
 export class UserService {
   private userRepository: UserRepository
 
@@ -19,6 +21,15 @@ export class UserService {
       throw new ResourceNotFoundError('User', userId)
     }
     return user
+  }
+
+  async hasUserTrainedModel(userId: number): Promise<boolean> {
+    const trainingCount = await this.userRepository.count({
+      id: userId,
+      trainedModelCount: MoreThanOrEqual(0)
+    })
+
+    return trainingCount > 0
   }
 
   async createOrUpdate(user: IUser): Promise<IUser> {
