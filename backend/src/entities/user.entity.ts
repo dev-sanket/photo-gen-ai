@@ -19,7 +19,10 @@ export class User extends BaseModel implements IUser {
   profilePicture?: string | undefined
 
   @Column({ type: 'numeric', default: 0 })
-  trainedModelCount!: number
+  trainedModelCount: number = 0
+
+  @Column({ type: 'numeric', default: 0 })
+  coins: number = 0
 
   @OneToMany(() => OutputImages, (OutputImages) => OutputImages.user)
   outputImages!: OutputImages[]
