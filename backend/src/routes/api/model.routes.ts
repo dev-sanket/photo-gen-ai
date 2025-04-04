@@ -10,7 +10,7 @@ const modelBindController = bindControllerMethods(modelController)
 
 router.get(
   '/',
-  verifyClerkJWTToken,
+  // verifyClerkJWTToken,
   asyncHandler(modelBindController.getModelsByUser)
 )
 router.get(

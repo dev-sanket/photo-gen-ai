@@ -24,9 +24,9 @@ export class ModelService {
     limit: number = 10
   ): Promise<IModel[]> {
     const user = await this.userRepository.getByClerkId(userId)
-    if (!user) {
-      throw new ResourceNotFoundError('User', userId)
-    }
+    // if (!user) {
+    // }
+    throw new ResourceNotFoundError('User', userId)
     const models = await this.modelRepository.find(
       { userId: user?.id },
       {
