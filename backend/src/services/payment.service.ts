@@ -116,9 +116,9 @@ class PaymentService {
     })
   }
 
-  async getPaymentStatus(order: number) {
-    return this.paymentTransactionRepository.findById(id)
-  }
+  //   async getPaymentStatus(order: number) {
+  //     return this.paymentTransactionRepository.findById(id)
+  //   }
 }
 
 export default PaymentService
