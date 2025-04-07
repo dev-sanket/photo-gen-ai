@@ -6,8 +6,8 @@ import { IOutPutImages } from '../types'
 const { ResourceNotFoundError } = errorTypes
 
 export class OutputImagesService {
-  outputImagesRepository: OutputImagesRepository
-  userRepository: UserRepository
+  private readonly outputImagesRepository: OutputImagesRepository
+  private readonly userRepository: UserRepository
   constructor() {
     this.outputImagesRepository = new OutputImagesRepository(AppDataSource)
     this.userRepository = new UserRepository()

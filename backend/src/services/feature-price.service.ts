@@ -4,7 +4,7 @@ import { IFeaturePrice } from 'src/types'
 import { ResourceNotFoundError } from '../utils/errors/error-types'
 
 export class FeaturePriceService {
-  private featurePriceRepository: FeaturePriceRepository
+  private readonly featurePriceRepository: FeaturePriceRepository
 
   constructor() {
     this.featurePriceRepository = new FeaturePriceRepository(AppDataSource)

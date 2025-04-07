@@ -20,7 +20,7 @@ const ProfileScreen = () => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const token = await getToken()
+        const token = await getToken({ template: 'jwt-test' })
         console.log('Token:', token)
         if (!token) {
           router.replace('/(auth)/sign-in')

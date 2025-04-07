@@ -8,9 +8,9 @@ import { IModel } from '../types'
 const { ResourceNotFoundError } = errorTypes
 
 export class ModelService {
-  private modelRepository: ModelRepository
-  private userRepository: UserRepository
-  private awsService: AWSService
+  private readonly modelRepository: ModelRepository
+  private readonly userRepository: UserRepository
+  private readonly awsService: AWSService
 
   constructor() {
     this.modelRepository = new ModelRepository(AppDataSource)
@@ -24,9 +24,9 @@ export class ModelService {
     limit: number = 10
   ): Promise<IModel[]> {
     const user = await this.userRepository.getByClerkId(userId)
-    // if (!user) {
-    // }
-    throw new ResourceNotFoundError('User', userId)
+    if (!user) {
+      throw new ResourceNotFoundError('User', userId)
+    }
     const models = await this.modelRepository.find(
       { userId: user?.id },
       {

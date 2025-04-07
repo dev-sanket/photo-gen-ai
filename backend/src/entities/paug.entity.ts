@@ -1,6 +1,7 @@
-import { Column, Entity } from 'typeorm'
+import { Column, Entity, OneToMany } from 'typeorm'
 import { BaseModel } from './base.entity'
 import { IPayAsYouGo } from '../types'
+import { PayAsYouGoPrice } from './paug-price.entity'
 
 @Entity({ name: 'paugs' })
 export class PayAsYouGoPackage extends BaseModel implements IPayAsYouGo {
@@ -8,19 +9,15 @@ export class PayAsYouGoPackage extends BaseModel implements IPayAsYouGo {
   packageName: string = ''
 
   @Column({ type: 'numeric' })
-  priceINR: number = 0
-
-  @Column({ type: 'numeric' })
-  priceUSD: number = 0
-
-  @Column({ type: 'numeric' })
-  priceEUR: number = 0
-
-  @Column({ type: 'numeric' })
   coinAllowance: number = 0
 
   @Column({ type: 'numeric' })
   bonusCoins: number = 0
+
+  @OneToMany(() => PayAsYouGoPrice, (price) => price.package, {
+    cascade: true
+  })
+  prices!: PayAsYouGoPrice[]
 
   @Column({ type: 'boolean', default: true })
   isActive: boolean = true

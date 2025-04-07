@@ -5,7 +5,7 @@ import { MoreThanOrEqual } from 'typeorm'
 
 const { ResourceNotFoundError } = errorTypes
 export class UserService {
-  private userRepository: UserRepository
+  private readonly userRepository: UserRepository
 
   constructor() {
     this.userRepository = new UserRepository()

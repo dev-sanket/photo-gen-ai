@@ -1,20 +1,30 @@
 import { Request, Response } from 'express'
-import { ApiResponse, ISubscription } from '../types'
+import { ApiResponse, IPayAsYouGo, ISubscription } from '../types'
 import { SubscriptionService } from '../services/subscription.service'
+import { PayAsYouGoService } from 'src/services/paug.service'
 
 export class SubscriptionController {
   private subscriptionService: SubscriptionService
-
+  private payAsYouGoService: PayAsYouGoService
   constructor() {
     this.subscriptionService = new SubscriptionService()
+    this.payAsYouGoService = new PayAsYouGoService()
   }
 
   async getAllSubscriptions(
     req: Request,
     res: Response
-  ): Promise<ApiResponse<ISubscription[]>> {
-    const subscriptions = await this.subscriptionService.getAllSubscriptions()
-    return { data: subscriptions, message: 'Success', status: 200 }
+  ): Promise<ApiResponse<{ paugs: IPayAsYouGo[] }>> {
+    const { country = 'IN', currency = 'INR' } = req.query
+
+    // const subscriptions = await this.subscriptionService.getAllSubscriptions()
+    const paugs =
+      await this.payAsYouGoService.getPayAsYouGoPackageByCountryAndCurrency(
+        country as string,
+        currency as string
+      )
+
+    return { data: { paugs }, message: 'Success', status: 200 }
   }
 
   async getSubscriptionById(

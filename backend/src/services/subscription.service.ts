@@ -4,8 +4,7 @@ import { SubscriptionRepository } from '../repositories'
 import { ResourceNotFoundError } from '../utils/errors/error-types'
 
 export class SubscriptionService {
-  private subscriptionRepository: SubscriptionRepository
-
+  private readonly subscriptionRepository: SubscriptionRepository
   constructor() {
     this.subscriptionRepository = new SubscriptionRepository(AppDataSource)
   }
