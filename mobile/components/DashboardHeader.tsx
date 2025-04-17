@@ -15,6 +15,7 @@ import { UserResource } from '@clerk/types'
 import { useRouter } from 'expo-router'
 import IconButton from './IconButton'
 import { Avatar } from 'react-native-paper'
+import { useGlobalContext } from '@/context/GlobalContext'
 
 interface IDashboardHeaderProps {
   user: UserResource
@@ -29,6 +30,7 @@ const DashboardHeader: React.FC<IDashboardHeaderProps> = ({
   const router = useRouter()
   const styles = getStyles(theme)
   const [userImageLoading, setUserImageLoading] = useState(false)
+  const { user: dbUser } = useGlobalContext()
 
   const scrollY = useRef(new Animated.Value(0)).current
 
@@ -59,7 +61,7 @@ const DashboardHeader: React.FC<IDashboardHeaderProps> = ({
               fontSize: theme.fonts.bodySmall.fontSize
             }}
           >
-            $500 coins
+            {dbUser?.coins} coins
           </ThemedText>
         </IconButton>
 
@@ -83,7 +85,7 @@ const getStyles = (theme: AppTheme) =>
       width: '100%',
       paddingTop: Platform.select({
         ios: theme.spacing.xxxl,
-        android: theme.spacing.xxl
+        android: theme.spacing.xxl * 1.2
       }),
       padding: theme.spacing.md,
       backgroundColor: theme.colors.background,

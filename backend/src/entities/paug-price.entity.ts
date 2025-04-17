@@ -16,4 +16,7 @@ export class PayAsYouGoPrice extends BaseModel implements IPaugPrice {
 
   @Column({ type: 'varchar' })
   currency: string = ''
+
+  @Column({ type: 'numeric' })
+  actualPrice: number = 0
 }

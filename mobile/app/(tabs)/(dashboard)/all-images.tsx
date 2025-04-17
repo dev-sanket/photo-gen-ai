@@ -13,6 +13,7 @@ import { ThemedText } from '@/components/ThemedText'
 import { Avatar } from 'react-native-paper'
 import { useRouter } from 'expo-router'
 import PageHeader from '@/components/PageHeader'
+import { SafeAreaView } from 'react-native-safe-area-context'
 const width = Dimensions.get('window').width
 
 const AllImagesListScreen = () => {
@@ -32,7 +33,7 @@ const AllImagesListScreen = () => {
   }, [])
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container}>
       <ScrollView>
         <PageHeader pageTitle="Photos" />
         <View style={styles.modelsSection}>
@@ -130,7 +131,7 @@ const AllImagesListScreen = () => {
         </View>
         <View style={{ height: 10 }}></View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 

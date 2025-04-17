@@ -17,10 +17,7 @@ export class UserController {
     return { data: users, message: 'Success', status: 200 }
   }
 
-  getUserById = async (
-    req: Request,
-    res: Response
-  ): Promise<ApiResponse<IUser>> => {
+  async getUserById(req: Request, res: Response): Promise<ApiResponse<IUser>> {
     const id = req.params.id
     const user = await this.userService.getUserByClerkId(id)
     return { data: user, message: 'Success', status: 200 }

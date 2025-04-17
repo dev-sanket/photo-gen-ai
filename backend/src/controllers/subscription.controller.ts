@@ -1,7 +1,6 @@
 import { Request, Response } from 'express'
 import { ApiResponse, IPayAsYouGo, ISubscription } from '../types'
-import { SubscriptionService } from '../services/subscription.service'
-import { PayAsYouGoService } from 'src/services/paug.service'
+import { SubscriptionService, PayAsYouGoService } from '../services'
 
 export class SubscriptionController {
   private subscriptionService: SubscriptionService

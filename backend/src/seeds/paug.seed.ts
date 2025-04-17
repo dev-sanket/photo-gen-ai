@@ -19,33 +19,39 @@ export const seedPayAsYouGoPackages = async () => {
       packageName: 'Small',
       coinAllowance: 500,
       bonusCoins: 150,
+      isPopular: false,
+      description: 'Small package for light users',
       isActive: true,
       prices: [
-        { countryCode: 'IN', currency: 'INR', price: 99 },
-        { countryCode: 'US', currency: 'USD', price: 1.49 },
-        { countryCode: 'FR', currency: 'EUR', price: 1.29 }
+        { countryCode: 'IN', currency: 'INR', price: 99, actualPrice: 99 },
+        { countryCode: 'US', currency: 'USD', price: 1.49, actualPrice: 1.49 },
+        { countryCode: 'FR', currency: 'EUR', price: 1.29, actualPrice: 1.29 }
       ]
     },
     {
       packageName: 'Medium',
       coinAllowance: 1500,
       bonusCoins: 250,
+      isPopular: false,
+      description: 'Medium package for moderate users',
       isActive: true,
       prices: [
-        { countryCode: 'IN', currency: 'INR', price: 249 },
-        { countryCode: 'US', currency: 'USD', price: 3.99 },
-        { countryCode: 'FR', currency: 'EUR', price: 3.49 }
+        { countryCode: 'IN', currency: 'INR', price: 249, actualPrice: 249 },
+        { countryCode: 'US', currency: 'USD', price: 3.99, actualPrice: 3.99 },
+        { countryCode: 'FR', currency: 'EUR', price: 3.49, actualPrice: 3.49 }
       ]
     },
     {
       packageName: 'Large',
       coinAllowance: 3000,
       bonusCoins: 500,
+      isPopular: false,
+      description: 'Large package for heavy users',
       isActive: true,
       prices: [
-        { countryCode: 'IN', currency: 'INR', price: 499 },
-        { countryCode: 'US', currency: 'USD', price: 7.99 },
-        { countryCode: 'FR', currency: 'EUR', price: 6.99 }
+        { countryCode: 'IN', currency: 'INR', price: 499, actualPrice: 499 },
+        { countryCode: 'US', currency: 'USD', price: 7.99, actualPrice: 7.99 },
+        { countryCode: 'FR', currency: 'EUR', price: 6.99, actualPrice: 6.99 }
       ]
     }
   ]
@@ -56,7 +62,8 @@ export const seedPayAsYouGoPackages = async () => {
       packageName: pkg.packageName,
       coinAllowance: pkg.coinAllowance,
       bonusCoins: pkg.bonusCoins,
-      isActive: pkg.isActive
+      isActive: pkg.isActive,
+      description: pkg.description
     })
 
     const savedPackage = await packageRepository.save(packageEntity)

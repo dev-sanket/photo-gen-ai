@@ -214,7 +214,7 @@ const GenerateImagesScreen = () => {
             />
           </View>
         </View>
-        <View style={{ height: 170 }}></View>
+        <View style={{ height: 70 }}></View>
       </ScrollView>
     </View>
   )

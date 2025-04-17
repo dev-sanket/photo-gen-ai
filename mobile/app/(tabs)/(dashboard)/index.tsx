@@ -1,11 +1,12 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import {
   StyleSheet,
   View,
   ScrollView,
   FlatList,
   Image,
-  Text
+  Text,
+  SafeAreaView
 } from 'react-native'
 
 import { ThemedText } from '@/components/ThemedText'
@@ -14,25 +15,40 @@ import { useAuth, useUser } from '@clerk/clerk-expo'
 import DashboardHeader from '@/components/DashboardHeader'
 import { LinearGradient } from 'expo-linear-gradient'
 import IconButton from '@/components/IconButton'
-import { Link } from 'expo-router'
+import { Link, useRouter } from 'expo-router'
+import getCountryCode from '@/utils/Location'
+import { useGlobalContext } from '@/context/GlobalContext'
+import getLocation from '@/utils/Location'
 
 export default function DashboardHomeScreen() {
   const theme = useAppTheme()
   const { getToken, userId } = useAuth()
+  const router = useRouter()
   const { user } = useUser()
-
+  const { setLocation } = useGlobalContext()
   const dummyData = [
     { id: '1', imageUrl: 'https://dummyimage.com/640x4:3&text=AI+Apps+rocks' },
     { id: '2', imageUrl: 'https://dummyimage.com/640x4:3&text=AI+Apps+rocks' },
     { id: '3', imageUrl: 'https://dummyimage.com/640x4:3&text=AI+Apps+rocks' },
     { id: '4', imageUrl: 'https://dummyimage.com/640x4:3&text=AI+Apps+rocks' }
   ]
+  useEffect(() => {
+    const fetchCountryCode = async () => {
+      const location = await getLocation()
+      setLocation(location)
+    }
+    fetchCountryCode()
+  }, [])
 
   const styles = getStyles(theme)
   return (
-    <View style={styles.container}>
-      {user && <DashboardHeader user={user} />}
-      <ScrollView style={{}} showsVerticalScrollIndicator={false}>
+    <SafeAreaView style={styles.container}>
+      {/* {user && <DashboardHeader user={user} />} */}
+      <ScrollView
+        style={{}}
+        showsVerticalScrollIndicator={false}
+        nestedScrollEnabled={true}
+      >
         <View style={styles.body}>
           <View style={styles.welcomeText}>
             <ThemedText type="default">Good Morning</ThemedText>
@@ -113,7 +129,7 @@ export default function DashboardHomeScreen() {
                 icon="gift"
                 size={22}
                 color="#a855f7"
-                onPress={() => console.log('Pressed')}
+                onPress={() => router.push('/coins')}
                 style={styles.actionButtonItem}
               >
                 <ThemedText type="default" style={styles.actionButtonText}>
@@ -153,10 +169,11 @@ export default function DashboardHomeScreen() {
               </Link>
             </View>
             <FlatList
-              nestedScrollEnabled={true}
+              nestedScrollEnabled={false}
               numColumns={2}
               data={dummyData}
               keyExtractor={(item) => item.id}
+              scrollEnabled={false}
               renderItem={({ item }) => (
                 <View
                   style={{
@@ -290,7 +307,7 @@ export default function DashboardHomeScreen() {
         </View>
         <View style={{ height: 70 }}></View>
       </ScrollView>
-    </View>
+    </SafeAreaView>
   )
 }
 

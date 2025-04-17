@@ -78,8 +78,8 @@ const getStyles = (theme: AppTheme) =>
   StyleSheet.create({
     headerContainer: {
       paddingTop: Platform.select({
-        ios: theme.spacing.xxl * 1.5,
-        android: theme.spacing.xxl
+        ios: theme.spacing.md,
+        android: theme.spacing.md
       }),
       paddingHorizontal: theme.spacing.sm,
       flexDirection: 'row',

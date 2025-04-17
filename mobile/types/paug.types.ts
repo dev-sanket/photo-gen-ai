@@ -1,4 +1,5 @@
 export interface IPayAsYouGo {
+  id: number
   packageName: string
   // priceINR: number
   // priceUSD: number
@@ -16,4 +17,8 @@ export interface IPaugPrice {
   price: number
   actualPrice: number
   currency: string
+}
+
+export interface IPaugPackageResponse {
+  paugs: IPayAsYouGo[]
 }

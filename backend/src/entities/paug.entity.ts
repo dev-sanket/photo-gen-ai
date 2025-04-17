@@ -19,6 +19,12 @@ export class PayAsYouGoPackage extends BaseModel implements IPayAsYouGo {
   })
   prices!: PayAsYouGoPrice[]
 
+  @Column({ type: 'boolean', default: false })
+  isPopular: boolean = false
+
+  @Column({ type: 'text' })
+  description: string = ''
+
   @Column({ type: 'boolean', default: true })
   isActive: boolean = true
 }

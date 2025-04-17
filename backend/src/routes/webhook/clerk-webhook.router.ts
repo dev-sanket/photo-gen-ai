@@ -1,11 +1,12 @@
 import express from 'express'
 import { UserRepository } from '../../repositories/user.repository'
 import { Webhook } from 'svix'
+import { logger } from '../../utils'
 
 const router = express.Router()
 const userRepository = new UserRepository()
 
-router.post('/clerk', async (req, res) => {
+router.post('/user', async (req, res) => {
   console.log('Webhook received')
   const SIGNING_SECRET = process.env.SIGNING_SECRET
 
@@ -73,8 +74,10 @@ router.post('/clerk', async (req, res) => {
             profilePicture: evt.data.profile_image_url
           }
 
-          userRepository.createOrUpdate(user)
+          await userRepository.createOrUpdate(user)
+          logger.info(`User ${user.clerkId} created or updated`)
         }
+
         break
       default:
         console.log(`Unhandled event type: ${eventType}`)

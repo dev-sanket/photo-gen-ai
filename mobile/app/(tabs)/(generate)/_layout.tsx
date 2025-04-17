@@ -1,14 +1,16 @@
 import React from 'react'
-import { Redirect, Stack } from 'expo-router'
+import { Redirect, router, Stack } from 'expo-router'
 import { useAuth } from '@clerk/clerk-expo'
 import IconButton from '@/components/IconButton'
 import { ThemedText } from '@/components/ThemedText'
 import { useAppTheme } from '@/theme/theme'
-
+import { Chip } from 'react-native-paper'
+import { Image } from 'react-native'
+import { useDbUser } from '@/hooks/useUser'
 const GenerateRootLayout = () => {
   const { isSignedIn } = useAuth()
   const theme = useAppTheme()
-
+  const { user: dbUser } = useDbUser()
   if (!isSignedIn) {
     return <Redirect href="/(auth)/sign-in" />
   }
@@ -23,34 +25,26 @@ const GenerateRootLayout = () => {
           headerBackVisible: false,
           headerRight: (props) => {
             return (
-              <IconButton
-                icon="plus"
-                iconPosition="left"
-                size={16}
-                color={theme.colors.warning}
+              <Chip
+                mode="flat"
+                icon={() =>
+                  <Image
+                    source={require('@/assets/images/coin.png')}
+                    style={{ width: 24, height: 24 }}
+                  />
+                }
                 style={{
-                  justifyContent: 'center',
-                  paddingHorizontal: 5,
-                  paddingVertical: 2,
-                  alignItems: 'center',
-                  //   borderWidth: 1,
-                  //   borderColor: theme.colors.inversePrimary,
-                  flexDirection: 'row',
-                  borderRadius: 25,
-                  backgroundColor: theme.colors.inverseOnSurface
+                  backgroundColor: theme.colors.inverseOnSurface,
+                  paddingHorizontal: theme.spacing.xs * 1.5,
+                  paddingVertical: theme.spacing.xs * 0.5,
+                  borderRadius: theme.roundness * 222,
+                  marginRight: theme.spacing.md,
                 }}
-                onPress={() => console.log('Pressed')}
+                onPress={() => router.push('/coins')}
               >
-                <ThemedText
-                  type="default"
-                  style={{
-                    color: theme.colors.backdrop,
-                    fontSize: theme.fonts.titleSmall.fontSize
-                  }}
-                >
-                  $500
-                </ThemedText>
-              </IconButton>
+                {dbUser?.coins}
+              </Chip>
+
             )
           }
         }}

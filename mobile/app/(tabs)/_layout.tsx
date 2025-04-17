@@ -1,15 +1,18 @@
 import { Tabs, useNavigation, usePathname, useRouter } from 'expo-router'
 import React from 'react'
-import { Platform } from 'react-native'
+import { Platform, View } from 'react-native'
 
 import { HapticTab } from '@/components/HapticTab'
 import { IconSymbol } from '@/components/ui/IconSymbol'
 import TabBarBackground from '@/components/ui/TabBarBackground'
 import { Colors } from '@/constants/Colors'
 import { useColorScheme } from '@/hooks/useColorScheme'
+import { useAppTheme } from '@/theme/theme'
 
 export default function TabLayout() {
   const colorScheme = useColorScheme()
+  const theme = useAppTheme()
+  const isDarkMode = colorScheme === 'dark'
 
   return (
     <Tabs
@@ -18,7 +21,7 @@ export default function TabLayout() {
         tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
         headerShown: false,
         tabBarButton: HapticTab,
-        tabBarBackground: TabBarBackground,
+        // tabBarBackground: () => <View style={{ backgroundColor: 'red', height: 100   }} />,
         tabBarStyle: {
           display: usePathname() === '/update-profile' ? 'none' : 'flex',
           position: Platform.select({

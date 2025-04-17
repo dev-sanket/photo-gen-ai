@@ -28,8 +28,13 @@ export class PaymentTransactionController {
     res: Response
   ): Promise<ApiResponse<IPaymentTransaction[]>> {
     const userId = req.userId as string
+    const { skip = '0', limit = '10' } = req.query
     const paymentTransactions =
-      await this.paymentService.getPaymentTransactions(userId)
+      await this.paymentService.getPaymentTransactions(
+        userId,
+        Number(skip),
+        Number(limit)
+      )
     return {
       status: 200,
       message: 'Payment transactions fetched successfully',
